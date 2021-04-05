@@ -28,7 +28,6 @@
         <!-- Navbar -->
         <x-partials.navbar />
         <!-- /.navbar -->
-
         <!-- Main Sidebar Container -->
         <x-partials.sidebar />
 
@@ -53,23 +52,15 @@
 
             <!-- Main content -->
             <section class="content">
-
                 <!-- Default box -->
                 {{ $slot }}
                 <!-- /.card -->
-
             </section>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
 
         <x-partials.footer />
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
 
     </div>
     <!-- ./wrapper -->
