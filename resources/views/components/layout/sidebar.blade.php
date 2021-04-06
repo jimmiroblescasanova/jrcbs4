@@ -44,7 +44,7 @@
                     class="fas fa-home"
                     message="Inicio"
                 />
-                <x-partials.sidebar-nav-link class="fas fa-building" message="Empresas" />
+                <x-partials.sidebar-nav-link :route="route('companies.index')" :active="request()->routeIs('companies.index')" class="fas fa-building" message="Empresas" />
                 <x-partials.sidebar-nav-link class="fas fa-users" :active="request()->routeIs('dashboard')" message="Contactos" />
                 <x-partials.sidebar-nav-link :route="route('configurations.index')" :active="request()->routeIs('configurations.*')" class="fas fa-cog" message="Configuraciones" />
 
@@ -96,9 +96,19 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt nav-icon"></i>
+                        <p>Cerrar sesión</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
     </div>
     <!-- /.sidebar -->
 </aside>

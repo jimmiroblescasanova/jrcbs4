@@ -26,10 +26,10 @@
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <x-partials.navbar />
+        <x-layout.navbar />
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
-        <x-partials.sidebar />
+        <x-layout.sidebar />
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -37,9 +37,7 @@
             <section class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                        <div class="col-sm-6">
-                            {{ $header }}
-                        </div>
+                        {{ $header }}
                         {{-- <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -60,7 +58,7 @@
         </div>
         <!-- /.content-wrapper -->
 
-        <x-partials.footer />
+        <x-layout.footer />
 
     </div>
     <!-- ./wrapper -->
@@ -69,6 +67,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
     @livewireScripts
+    {{ $custom_scripts ?? '' }}
 </body>
 
 </html>
