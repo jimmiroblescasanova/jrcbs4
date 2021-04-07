@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Company extends Model
 {
@@ -17,5 +18,10 @@ class Company extends Model
             : static::query()->where('id', 'LIKE', '%' . $search . '%')
             ->orWhere('name', 'LIKE', '%' . $search . '%')
             ->orWhere('rfc', 'LIKE', '%' . $search . '%');
+    }
+
+    public function setRfcAttribute($rfc)
+    {
+        return $this->attributes['rfc'] = Str::upper($rfc);
     }
 }

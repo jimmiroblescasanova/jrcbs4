@@ -12,11 +12,16 @@ class ShowCompaniesTable extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $perPage = 10;
-    public $orderByDesc = true;
-    public $searchQuery = '';
+    public $search = '';
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
 
     protected $listeners = [
         'companyAdded',
+    ];
+
+    protected $queryString = [
+        'search' => ['except' => ''],
     ];
 
     public function companyAdded()
@@ -24,7 +29,17 @@ class ShowCompaniesTable extends Component
         session()->flash('message', 'Registro guardado');
     }
 
-    public function updatedsearchQuery()
+    public function sortBy($column)
+    {
+        if ($this->sortField === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+        $this->sortField = $column;
+    }
+
+    public function updatedsearch()
     {
         $this->resetPage();
     }
@@ -37,8 +52,8 @@ class ShowCompaniesTable extends Component
     public function render()
     {
         return view('livewire.companies.show-companies-table', [
-            'companies' => Company::search($this->searchQuery)
-                ->orderBy('id', $this->orderByDesc ? 'DESC' : 'ASC')
+            'companies' => Company::search($this->search)
+                ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage),
         ]);
     }

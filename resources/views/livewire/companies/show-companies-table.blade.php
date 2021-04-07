@@ -3,18 +3,12 @@
         <x-partials.alert icon="fas fa-check" :message="session('message')" />
     @endif
     <div class="row">
-        <div class="form-group col-12 col-md 8">
+        <div class="form-group col-12 col-md-10">
             <input type="text"
-                wire:model.debounce.500ms='searchQuery'
+                wire:model.debounce.500ms='search'
                 class="form-control border-0 shadow-sm"
                 placeholder="Buscar por nombre, RFC"
             />
-        </div>
-        <div class="form-group col-12 col-md-2">
-            <select class="form-control" wire:model='orderByDesc'>
-                <option value="1">Descendente</option>
-                <option value="0">Ascendente</option>
-            </select>
         </div>
         <div class="form-group col-12 col-md-2">
             <select class="form-control" wire:model='perPage'>
@@ -30,9 +24,10 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre de la empresa</th>
-                        <th>RFC</th>
+                        <x-tables.table-heading sortable wire:click="sortBy('id')" :direction="$sortField === 'id' ? $sortDirection : null">ID</x-tables.table-heading>
+                        <x-tables.table-heading sortable wire:click="sortBy('name')" :direction="$sortField === 'name' ? $sortDirection : null">Nombre de la empresa</x-tables.table-heading>
+                        <x-tables.table-heading sortable wire:click="sortBy('rfc')" :direction="$sortField === 'rfc' ? $sortDirection : null">R.F.C.</x-tables.table-heading>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,10 +36,11 @@
                             <td scope="row">{{ $company->id }}</td>
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->rfc }}</td>
+                            <td></td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3">No existen registros.</td>
+                            <td colspan="4">No existen registros.</td>
                         </tr>
                     @endforelse
                 </tbody>
