@@ -35,10 +35,22 @@
                 $('#updateCompanyModal').modal('hide');
             });
 
-            function confirmDelete(id) {
-                if (confirm("¿Seguro deseas eliminar la empresa?") == true) {
-                    Livewire.emit('deleteCompany', id);
-                }
+            function confirmDeletion(id, name) {
+                swal({
+                title: "Confirmar",
+                text: "Se eliminará: " + name + ", no se podrá recuperar finalizado el proceso.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        Livewire.emit('deleteCompany', id);
+                        swal("La empresa ha sido eliminada.", {
+                            icon: "success",
+                        });
+                    }
+                });
             }
         </script>
     </x-slot>

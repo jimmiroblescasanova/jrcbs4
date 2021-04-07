@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\CompaniesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\ConfigurationsController;
 
 Route::get('/', function () {
@@ -13,6 +14,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::get('/configurations', [ConfigurationsController::class, 'index'])->name('configurations.index');
 
 Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
+
+Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts.index');
+Route::get('/contacts/create', [ContactsController::class, 'create'])->name('contacts.create');
+Route::post('/contacts/create', [ContactsController::class, 'store'])->name('contacts.store');
+Route::get('/contacts/{contact}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');
+Route::patch('/contacts/{contact}/edit', [ContactsController::class, 'update'])->name('contacts.update');

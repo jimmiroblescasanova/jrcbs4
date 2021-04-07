@@ -38,7 +38,7 @@
                             <td>{{ $company->rfc }}</td>
                             <td class="text-center">
                                 <a style="cursor: pointer;" wire:click="$emit('editModal', {{ $company->id }})" data-toggle="modal" data-target="#updateCompanyModal" class="mr-2"><i class="fas fa-edit" style="color: #007bff;"></i></a>
-                                <a style="cursor: pointer;" onclick="confirmDelete({{ $company->id }});"><i class="fas fa-trash-alt" style="color: #dc3545;"></i></a>
+                                <a style="cursor: pointer;" onclick="confirmDeletion({{ $company->id }}, '{{ $company->name }}');"><i class="fas fa-trash-alt" style="color: #dc3545;"></i></a>
                             </td>
                         </tr>
                     @empty

@@ -24,4 +24,9 @@ class Company extends Model
     {
         return $this->attributes['rfc'] = Str::upper($rfc);
     }
+
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 }

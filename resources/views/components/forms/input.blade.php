@@ -1,4 +1,4 @@
-@props(['type' => 'text', 'name'])
+@props(['type' => 'text', 'name', 'value' => null])
 
 <label for="{{ $name }}">{{ $slot }}</label>
 <input
@@ -6,6 +6,7 @@
     id="{{ $name }}"
     name="{{ $name }}"
     {{ $attributes->except('class') }}
+    value="{{ old($name, $value) }}"
     class="form-control @error($name) is-invalid @enderror"
 />
 @error($name)

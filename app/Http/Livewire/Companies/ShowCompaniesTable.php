@@ -53,8 +53,6 @@ class ShowCompaniesTable extends Component
     public function deleteCompany(Company $company)
     {
         $company->delete();
-
-        session()->flash('message', 'Registro eliminado de forma exitosa.');
     }
 
     public function render()
