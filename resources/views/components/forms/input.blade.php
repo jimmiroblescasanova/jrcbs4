@@ -1,13 +1,14 @@
-@props(['type' => 'text', 'label', 'modelName'])
+@props(['type' => 'text', 'name'])
 
-<label for="{{ $modelName }}">{{ $label }}</label>
+<label for="{{ $name }}">{{ $slot }}</label>
 <input
     type="{{ $type }}"
-    wire:model.lazy="{{ $modelName }}"
-    id="{{ $modelName }}"
-    class="form-control @error($modelName) is-invalid @enderror"
+    id="{{ $name }}"
+    name="{{ $name }}"
+    {{ $attributes->except('class') }}
+    class="form-control @error($name) is-invalid @enderror"
 />
-@error($modelName)
+@error($name)
     <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
     </span>

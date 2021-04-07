@@ -7,23 +7,22 @@ use Livewire\Component;
 
 class CreateCompanyForm extends Component
 {
-    public $company = [];
+    public $name, $rfc;
 
     protected $rules = [
-        'company.name' => ['required', 'min:5'],
-        'company.rfc' => ['required', 'min:12', 'max:13']
+        'name' => ['required', 'min:5'],
+        'rfc' => ['required', 'min:12', 'max:13']
     ];
 
     public function save()
     {
         $this->validate();
 
-        Company::create([
-            'name' => $this->company['name'],
-            'rfc' => $this->company['rfc'],
+        Company::create(['name' => $this->name,
+            'rfc' => $this->rfc,
         ]);
 
-        $this->emit('companyAdded');
+        $this->emit('companyAddedOrUpdated');
     }
 
     public function render()

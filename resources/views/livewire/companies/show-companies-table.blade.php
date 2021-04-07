@@ -11,7 +11,7 @@
             />
         </div>
         <div class="form-group col-12 col-md-2">
-            <select class="form-control" wire:model='perPage'>
+            <select class="form-control border-0 shadow-sm" wire:model='perPage'>
                 <option>10</option>
                 <option>15</option>
                 <option>25</option>
@@ -27,7 +27,7 @@
                         <x-tables.table-heading sortable wire:click="sortBy('id')" :direction="$sortField === 'id' ? $sortDirection : null">ID</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('name')" :direction="$sortField === 'name' ? $sortDirection : null">Nombre de la empresa</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('rfc')" :direction="$sortField === 'rfc' ? $sortDirection : null">R.F.C.</x-tables.table-heading>
-                        <th>Opciones</th>
+                        <th style="width: 10%;">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +36,10 @@
                             <td scope="row">{{ $company->id }}</td>
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->rfc }}</td>
-                            <td></td>
+                            <td class="text-center">
+                                <a style="cursor: pointer;" wire:click="$emit('editModal', {{ $company->id }})" data-toggle="modal" data-target="#updateCompanyModal" class="mr-2"><i class="fas fa-edit" style="color: #007bff;"></i></a>
+                                <a style="cursor: pointer;" onclick="confirmDelete({{ $company->id }});"><i class="fas fa-trash-alt" style="color: #dc3545;"></i></a>
+                            </td>
                         </tr>
                     @empty
                         <tr>

@@ -12,19 +12,34 @@
 
     @livewire('companies.show-companies-table')
 
-    <!-- Modal -->
-    <div class="modal fade" id="createCompnayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- createCompnayModal -->
+    <div class="modal fade" id="createCompnayModal" tabindex="-1" role="dialog" aria-labelledby="createCompnayModal"
         aria-hidden="true">
         <div class="modal-dialog">
             @livewire('companies.create-company-form')
         </div>
     </div>
 
+    <!-- updateCompanyModal -->
+    <div class="modal fade" id="updateCompanyModal" tabindex="-1" role="dialog" aria-labelledby="updateCompanyModal"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            @livewire('companies.update-company-form')
+        </div>
+    </div>
+
     <x-slot name="custom_scripts">
         <script>
-            window.livewire.on('companyAdded', () => {
+            window.livewire.on('companyAddedOrUpdated', () => {
                 $('#createCompnayModal').modal('hide');
+                $('#updateCompanyModal').modal('hide');
             });
+
+            function confirmDelete(id) {
+                if (confirm("¿Seguro deseas eliminar la empresa?") == true) {
+                    Livewire.emit('deleteCompany', id);
+                }
+            }
         </script>
     </x-slot>
 </x-main-layout>

@@ -17,16 +17,17 @@ class ShowCompaniesTable extends Component
     public $sortDirection = 'desc';
 
     protected $listeners = [
-        'companyAdded',
+        'companyAddedOrUpdated',
+        'deleteCompany',
     ];
 
     protected $queryString = [
         'search' => ['except' => ''],
     ];
 
-    public function companyAdded()
+    public function companyAddedOrUpdated()
     {
-        session()->flash('message', 'Registro guardado');
+        session()->flash('message', 'Registro guardado de forma exitosa.');
     }
 
     public function sortBy($column)
@@ -47,6 +48,13 @@ class ShowCompaniesTable extends Component
     public function updatedperPage()
     {
         $this->resetPage();
+    }
+
+    public function deleteCompany(Company $company)
+    {
+        $company->delete();
+
+        session()->flash('message', 'Registro eliminado de forma exitosa.');
     }
 
     public function render()
