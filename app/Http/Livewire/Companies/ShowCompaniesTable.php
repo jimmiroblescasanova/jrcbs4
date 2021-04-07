@@ -11,8 +11,8 @@ class ShowCompaniesTable extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $perPage = 10;
     public $search = '';
+    public $perPage = 10;
     public $sortField = 'id';
     public $sortDirection = 'desc';
 

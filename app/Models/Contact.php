@@ -11,6 +11,14 @@ class Contact extends Model
 
     protected $guarded = [];
 
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()->where('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('lastname', 'LIKE', '%' . $search . '%')
+            ->orWhere('email', 'LIKE', '%' . $search . '%');
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class);
