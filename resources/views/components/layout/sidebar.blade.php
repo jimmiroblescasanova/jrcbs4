@@ -47,6 +47,7 @@
                 <x-partials.sidebar-nav-link :route="route('companies.index')" :active="request()->routeIs('companies.*')" class="fas fa-building" message="Empresas" />
                 <x-partials.sidebar-nav-link :route="route('contacts.index')" class="fas fa-users" :active="request()->routeIs('contacts.*')" message="Contactos" />
                 <x-partials.sidebar-nav-link :route="route('configurations.index')" :active="request()->routeIs('configurations.*')" class="fas fa-cog" message="Configuraciones" />
+                <x-partials.sidebar-nav-link :route="route('tickets.index')" :active="request()->routeIs('tickets.*')" class="fas fa-calendar-check" message="Tickets" />
 
                 <li class="nav-item">
                     <a href="#" class="nav-link">

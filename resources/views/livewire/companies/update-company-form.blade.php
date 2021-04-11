@@ -14,14 +14,6 @@
             <div class="form-group">
                 <x-forms.input wire:model.lazy="rfc" name="update.rfc">RFC de la empresa</x-forms.input>
             </div>
-            <div class="row">
-                <p><strong>Contactos de la empresa: </strong></p>
-                <ul class="list-group col-12">
-                @foreach ($contacts as $contact)
-                    <li class="list-group-item">{{ $contact->name }}</li>
-                @endforeach
-                </ul>
-            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cerrar</button>

@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\ConfigurationsController;
+use App\Http\Controllers\TicketsController;
+use App\Http\Livewire\Configurations\EditTag;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +26,6 @@ Route::get('/contacts/create', [ContactsController::class, 'create'])->name('con
 Route::post('/contacts/create', [ContactsController::class, 'store'])->name('contacts.store');
 Route::get('/contacts/{contact}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');
 Route::patch('/contacts/{contact}/edit', [ContactsController::class, 'update'])->name('contacts.update');
+
+Route::get('/tickets', [TicketsController::class, 'index'])->name('tickets.index');
+Route::get('/tickets/create', [TicketsController::class, 'create'])->name('tickets.create');

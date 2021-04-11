@@ -8,7 +8,6 @@ use Livewire\Component;
 class UpdateCompanyForm extends Component
 {
     public $name, $rfc, $idCompany;
-    public $contacts = [];
 
     protected $listeners = [
         'editModal',
@@ -24,7 +23,6 @@ class UpdateCompanyForm extends Component
         $this->idCompany = $company->id;
         $this->name = $company->name;
         $this->rfc = $company->rfc;
-        $this->contacts = $company->contacts;
     }
 
     public function update()

@@ -52,7 +52,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5">No existen registros asociados a la búsqueda.</td>
+                            <td colspan="6">No existen registros asociados a la búsqueda.</td>
                         </tr>
                     @endforelse
                 </tbody>
