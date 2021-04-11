@@ -1,15 +1,17 @@
 <div>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header border-0">
             <h3 class="card-title">Tabla de etiquetas</h3>
-            <button type="button" wire:click="addTag" class="btn btn-primary btn-xs float-right">Nuevo</button>
+            <div class="card-tools">
+                {{ $tags->links() }}
+            </div>
         </div>
         <div class="card-body p-0">
             <table class="table table-sm">
-                <thead>
+                <thead class="text-center">
                     <tr>
                         <th>Nombre</th>
-                        <th>Color</th>
+                        <th style="width: 25%;">Color</th>
                         <th style="width: 15%;">Acción</th>
                     </tr>
                 </thead>
@@ -17,7 +19,7 @@
                     @foreach ($tags as $tag)
                         <tr>
                             <td scope="row">{{ $tag->name }}</td>
-                            <td><i class="fas fa-circle" style="color: {{ $tag->color }}"></i></td>
+                            <td class="text-center"><i class="fas fa-circle" style="color: {{ $tag->color }}"></i></td>
                             <td class="text-center">
                                 <a href="#" wire:click="updateTag({{ $tag->id }})"><i class="fas fa-edit mr-2"></i></a>
                                 <a href="#" onclick="confirmDeletion({{ $tag->id }}, '{{ $tag->name }}')"><i class="fas fa-trash-alt" style="color: red;"></i></a>
@@ -27,8 +29,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer pb-0">
-            {{ $tags->links() }}
+        <div class="card-footer">
+            <button type="button" wire:click="addTag" class="btn btn-primary btn-sm float-right">Nuevo</button>
         </div>
     </div>
     <div wire:ignore.self class="modal fade" id="modal-tags" style="display: none;" aria-hidden="true">

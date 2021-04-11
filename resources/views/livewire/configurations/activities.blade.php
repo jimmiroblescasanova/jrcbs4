@@ -1,9 +1,10 @@
 <div>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header border-0">
             <h3 class="card-title">Tabla de actividades</h3>
-            <button type="button" class="btn btn-primary btn-xs float-right" data-toggle="modal"
-                data-target="#modal-sm">Nuevo</button>
+            <div class="card-tools">
+                {{ $activities->links() }}
+            </div>
         </div>
         <div class="card-body p-0">
             <table class="table table-sm">
@@ -23,8 +24,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer pb-0">
-            {{ $activities->links() }}
+        <div class="card-footer clearfix">
+            <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
+                data-target="#modal-sm">Nuevo</button>
         </div>
     </div>
     <div wire:ignore.self class="modal fade" id="modal-sm" style="display: none;" aria-hidden="true">
