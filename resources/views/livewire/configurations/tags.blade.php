@@ -1,7 +1,7 @@
 <div>
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="card-title">Tabla de etiquetas</h3>
+            <h3 class="card-title"><i class="fas fa-tags"></i> Tabla de etiquetas</h3>
             <div class="card-tools">
                 {{ $tags->links() }}
             </div>
@@ -21,8 +21,8 @@
                             <td scope="row">{{ $tag->name }}</td>
                             <td class="text-center"><i class="fas fa-circle" style="color: {{ $tag->color }}"></i></td>
                             <td class="text-center">
-                                <a href="#" wire:click="updateTag({{ $tag->id }})"><i class="fas fa-edit mr-2"></i></a>
-                                <a href="#" onclick="confirmDeletion({{ $tag->id }}, '{{ $tag->name }}')"><i class="fas fa-trash-alt" style="color: red;"></i></a>
+                                <a href="#" wire:click="updateTag({{ $tag->id }})" class="mr-2"><i class="fas fa-edit"></i></a>
+                                <a href="#" onclick="deleteTag({{ $tag->id }}, '{{ $tag->name }}')"><i class="fas fa-trash-alt" style="color: red;"></i></a>
                             </td>
                         </tr>
                     @endforeach

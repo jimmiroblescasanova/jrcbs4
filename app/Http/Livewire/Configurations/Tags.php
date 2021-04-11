@@ -18,7 +18,7 @@ class Tags extends Component
         'color' => ['required'],
     ];
 
-    protected $listeners = ['delete'];
+    protected $listeners = ['deleteTag'];
 
     public function clearVars()
     {
@@ -56,19 +56,19 @@ class Tags extends Component
             'color' => $this->color,
         ];
 
-        if ($this->idTag == null) {
-            Tag::create($data);
-        } else {
+        if ($this->idTag) {
             Tag::find($this->idTag)->update($data);
+        } else {
+            Tag::create($data);
         }
 
         $this->clearVars();
         $this->emit('hideModalTrigger');
     }
 
-    public function delete($tag)
+    public function deleteTag($id)
     {
-        Tag::find($tag)->delete();
+        Tag::findOrFail($id)->delete();
     }
 
     public function render()

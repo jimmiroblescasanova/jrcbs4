@@ -11,27 +11,58 @@ class Activities extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $name;
+    public $activityId, $name;
 
     protected $rules = [
         'name' => ['required', 'string', 'min:5'],
     ];
+
+    protected $listeners = ['deleteActivity'];
 
     public function clearVars()
     {
         $this->name = '';
     }
 
-    public function save()
+    public function addActivity()
+    {
+        $activity = new Activity();
+
+        $this->activityId = $activity->id;
+        $this->name = $activity->name;
+
+        $this->emit('addOrUpdateModal');
+    }
+
+    public function updateActivity(Activity $activity)
+    {
+        $this->activityId = $activity->id;
+        $this->name = $activity->name;
+
+        $this->emit('addOrUpdateModal');
+    }
+
+    public function saveActivity()
     {
         $this->validate();
 
-        Activity::create([
-            'name' => $this->name,
-        ]);
+        $data = [
+            'name' => $this->name
+        ];
+
+        if ($this->activityId) {
+            Activity::findOrFail($this->activityId)->update($data);
+        } else {
+            Activity::create($data);
+        }
 
         $this->emit('hideModalTrigger');
         $this->clearVars();
+    }
+
+    public function deleteActivity($id)
+    {
+        Activity::findOrFail($id)->delete();
     }
 
     public function render()

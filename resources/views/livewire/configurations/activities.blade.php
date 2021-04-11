@@ -1,7 +1,7 @@
 <div>
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="card-title">Tabla de actividades</h3>
+            <h3 class="card-title"><i class="fas fa-clipboard-list"></i> Tabla de actividades</h3>
             <div class="card-tools">
                 {{ $activities->links() }}
             </div>
@@ -18,18 +18,20 @@
                     @foreach ($activities as $activity)
                         <tr>
                             <td scope="row">{{ $activity->name }}</td>
-                            <td></td>
+                            <td class="text-center">
+                                <a wire:click="updateActivity({{ $activity }})" href="#" class="mr-2"><i class="fas fa-edit"></i></a>
+                                <a onclick="deleteActivity({{ $activity->id }}, '{{ $activity->name }}')" href="#"><i class="fas fa-trash-alt" style="color:red;"></i></a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
         <div class="card-footer clearfix">
-            <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
-                data-target="#modal-sm">Nuevo</button>
+            <button wire:click="addActivity" type="button" class="btn btn-primary btn-sm float-right">Nuevo</button>
         </div>
     </div>
-    <div wire:ignore.self class="modal fade" id="modal-sm" style="display: none;" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="activitiesModal" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -38,7 +40,8 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form role="form" wire:submit.prevent='save'>
+                <form role="form" wire:submit.prevent='saveActivity'>
+                    <input type="hidden" wire:model.lazy="activityId">
                     <div class="modal-body">
                         <div class="form-group">
                             <x-forms.input name="name" wire:model.lazy="name">Nombre de la actividad</x-forms.input>

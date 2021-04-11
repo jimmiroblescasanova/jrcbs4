@@ -24,7 +24,11 @@
                 $('#modal-tags').modal('show');
             });
 
-            function confirmDeletion(id, name) {
+            window.livewire.on('addOrUpdateModal', () => {
+                $('#activitiesModal').modal('show');
+            });
+
+            function deleteTag(id, name) {
                 swal({
                 title: "Confirmar",
                 text: "Se eliminará: " + name + ", no se podrá recuperar finalizado el proceso.",
@@ -34,7 +38,25 @@
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        Livewire.emit('delete', id);
+                        Livewire.emit('deleteTag', id);
+                        swal("La empresa ha sido eliminada.", {
+                            icon: "success",
+                        });
+                    }
+                });
+            }
+
+            function deleteActivity(id, name) {
+                swal({
+                title: "Confirmar",
+                text: "Se eliminará: " + name + ", no se podrá recuperar finalizado el proceso.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        Livewire.emit('deleteActivity', id);
                         swal("La empresa ha sido eliminada.", {
                             icon: "success",
                         });
