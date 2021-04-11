@@ -17,6 +17,11 @@ class Activities extends Component
         'name' => ['required', 'string', 'min:5'],
     ];
 
+    public function clearVars()
+    {
+        $this->name = '';
+    }
+
     public function save()
     {
         $this->validate();
@@ -26,12 +31,13 @@ class Activities extends Component
         ]);
 
         $this->emit('hideModalTrigger');
+        $this->clearVars();
     }
 
     public function render()
     {
         return view('livewire.configurations.activities', [
-            'activities' => Activity::paginate(),
+            'activities' => Activity::simplePaginate(5),
         ]);
     }
 }

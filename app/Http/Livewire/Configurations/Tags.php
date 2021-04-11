@@ -74,7 +74,7 @@ class Tags extends Component
     public function render()
     {
         return view('livewire.configurations.tags', [
-            'tags' => Tag::paginate(6),
+            'tags' => Tag::simplePaginate(5),
         ]);
     }
 }
