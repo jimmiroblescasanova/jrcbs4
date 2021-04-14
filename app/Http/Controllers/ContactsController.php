@@ -16,7 +16,6 @@ class ContactsController extends Controller
 
     public function create()
     {
-        return Contact::count();
         return view('contacts.create', [
             'companies' => Company::pluck('name', 'id'),
             'contact' => new Contact,

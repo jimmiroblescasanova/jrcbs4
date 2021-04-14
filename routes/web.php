@@ -29,3 +29,4 @@ Route::patch('/contacts/{contact}/edit', [ContactsController::class, 'update'])-
 
 Route::get('/tickets', [TicketsController::class, 'index'])->name('tickets.index');
 Route::get('/tickets/create', [TicketsController::class, 'create'])->name('tickets.create');
+Route::post('/tickets/create', [TicketsController::class, 'store'])->name('tickets.store');

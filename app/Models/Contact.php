@@ -23,4 +23,9 @@ class Contact extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }
