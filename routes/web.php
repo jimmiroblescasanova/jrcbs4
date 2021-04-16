@@ -30,3 +30,5 @@ Route::patch('/contacts/{contact}/edit', [ContactsController::class, 'update'])-
 Route::get('/tickets', [TicketsController::class, 'index'])->name('tickets.index');
 Route::get('/tickets/create', [TicketsController::class, 'create'])->name('tickets.create');
 Route::post('/tickets/create', [TicketsController::class, 'store'])->name('tickets.store');
+Route::get('/tickets/{ticket}/show', [TicketsController::class, 'show'])->name('tickets.show');
+Route::post('/tickets/{ticket}/add-comment', [TicketsController::class, 'addComment'])->name('tickets.comment');

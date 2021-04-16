@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveCommentRequest;
 use App\Http\Requests\SaveTicketRequest;
 use App\Models\Tag;
 use App\Models\Ticket;
 use App\Models\Contact;
 use App\Models\Activity;
+use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +26,7 @@ class TicketsController extends Controller
             'contacts' => Contact::pluck('name', 'id'),
             'tags' => Tag::pluck('name', 'id'),
             'activities' => Activity::pluck('name', 'id'),
+            'users' => User::pluck('name', 'id'),
         ]);
     }
 
@@ -33,5 +37,26 @@ class TicketsController extends Controller
         session()->flash('message', "Registro agregado correctamente.");
 
         return redirect()->route('tickets.index');
+    }
+
+    public function show(Ticket $ticket)
+    {
+        return view('tickets.show', [
+            'ticket' => $ticket,
+            'activities' => Activity::pluck('name', 'id'),
+        ]);
+    }
+
+    public function addComment(SaveCommentRequest $request, Ticket $ticket)
+    {
+        $data = [
+            'ticket_id' => $ticket->id,
+            'user_id' => Auth::id(),
+            'message' => $request->message,
+        ];
+
+        $comment = Comment::create($data);
+
+        return redirect()->back();
     }
 }

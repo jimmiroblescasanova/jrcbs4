@@ -18,16 +18,17 @@ class CreateTicketsTable extends Migration
             $table->unsignedBigInteger('contact_id');
             $table->unsignedBigInteger('activity_id');
             $table->unsignedBigInteger('tag_id');
-            $table->unsignedBigInteger('user_id');
-            $table->text('comments')->nullable();
-            $table->integer('status')->default(1);
+            $table->text('note')->nullable();
             $table->boolean('active')->default(1);
-            $table->dateTime('ended_at')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('assigned_to');
+            $table->timestamp('ended_at')->nullable();
             $table->timestamps();
             $table->foreign('contact_id')->references('id')->on('contacts');
             $table->foreign('activity_id')->references('id')->on('activities');
             $table->foreign('tag_id')->references('id')->on('tags');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('assigned_to')->references('id')->on('users');
         });
     }
 
