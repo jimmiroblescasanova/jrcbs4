@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\Activity;
 use App\Models\Comment;
 use App\Models\User;
+use App\Notifications\NewComment;
 use App\Notifications\TicketAssigned;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,12 +36,12 @@ class TicketsController extends Controller
     {
         $ticket = Ticket::create($request->validated());
 
-        $notification = [
-            'route' => "/tickets/{$ticket->id}/show",
+        $data = [
+            'id' => $ticket->id,
             'activity' => $ticket->activity->name,
         ];
 
-        User::findOrFail($ticket->assigned_to)->notify(new TicketAssigned($notification));
+        User::findOrFail($ticket->assigned_to)->notify(new TicketAssigned($data));
 
         session()->flash('message', "Registro agregado correctamente.");
 
@@ -63,7 +64,8 @@ class TicketsController extends Controller
             'message' => $request->message,
         ];
 
-        $comment = Comment::create($data);
+        Comment::create($data);
+        User::findOrFail($ticket->assigned_to)->notify(new NewComment($data));
 
         return redirect()->back();
     }

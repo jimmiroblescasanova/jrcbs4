@@ -2,12 +2,13 @@
 
 namespace App\Notifications;
 
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class TicketAssigned extends Notification
+class NewComment extends Notification
 {
     use Queueable;
 
@@ -21,8 +22,8 @@ class TicketAssigned extends Notification
      */
     public function __construct($notification)
     {
-        $this->ticket = $notification['id'];
-        $this->activity = $notification['activity'];
+        $this->ticket = $notification['ticket_id'];
+        $this->activity = Str::limit($notification['message'], 15);
     }
 
     /**
@@ -59,7 +60,7 @@ class TicketAssigned extends Notification
     public function toArray($notifiable)
     {
         return [
-            'icon' => 'far fa-calendar-check',
+            'icon' => 'far fa-comment-dots',
             'route' => "/tickets/{$this->ticket}/show",
             'activity' => $this->activity,
         ];
