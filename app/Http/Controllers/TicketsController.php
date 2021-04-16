@@ -10,6 +10,7 @@ use App\Models\Contact;
 use App\Models\Activity;
 use App\Models\Comment;
 use App\Models\User;
+use App\Notifications\TicketAssigned;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +34,13 @@ class TicketsController extends Controller
     public function store(SaveTicketRequest $request)
     {
         $ticket = Ticket::create($request->validated());
+
+        $notification = [
+            'route' => "/tickets/{$ticket->id}/show",
+            'activity' => $ticket->activity->name,
+        ];
+
+        User::findOrFail($ticket->assigned_to)->notify(new TicketAssigned($notification));
 
         session()->flash('message', "Registro agregado correctamente.");
 
