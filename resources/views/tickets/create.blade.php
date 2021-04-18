@@ -35,6 +35,7 @@
                         </div>
                         <div class="form-group">
                             <x-form-select name="assigned_to" class="select2" label="Asignar a">
+                                <option></option>
                                 @foreach ($users as $id => $user)
                                     <option value="{{ $id }}">{{ $user }}</option>
                                 @endforeach

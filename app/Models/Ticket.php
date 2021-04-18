@@ -42,4 +42,31 @@ class Ticket extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function scopeOrderByContact($query, $direction = 'desc')
+    {
+        $query->orderBy(
+            Contact::select('name')
+                ->whereColumn('contacts.id', 'tickets.contact_id'),
+            $direction
+        );
+    }
+
+    public function scopeOrderByActivity($query, $direction = 'desc')
+    {
+        $query->orderBy(
+            Activity::select('name')
+                ->whereColumn('activities.id', 'tickets.activity_id'),
+            $direction
+        );
+    }
+
+    public function scopeOrderByUser($query, $direction = 'desc')
+    {
+        $query->orderBy(
+            User::select('name')
+                ->whereColumn('users.id', 'tickets.assigned_to'),
+            $direction
+        );
+    }
+
 }

@@ -12,6 +12,7 @@ use App\Models\Comment;
 use App\Models\User;
 use App\Notifications\NewComment;
 use App\Notifications\TicketAssigned;
+use App\Notifications\TicketClosed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,6 +55,32 @@ class TicketsController extends Controller
             'ticket' => $ticket,
             'activities' => Activity::pluck('name', 'id'),
         ]);
+    }
+
+    public function update(Ticket $ticket, Request $request)
+    {
+        $ticket->update([
+            'activity_id' => $request->activity_id,
+        ]);
+
+        return redirect()->route('tickets.index');
+    }
+
+    public function close(Ticket $ticket)
+    {
+        $ticket->update([
+            'active' => false,
+            'ended_at' => NOW(),
+        ]);
+
+        $data = [
+            'id' => $ticket->id,
+            'message' => 'Ticket cerrado',
+        ];
+
+        User::findOrFail($ticket->created_by)->notify(new TicketClosed($data));
+
+        return redirect()->route('tickets.index');
     }
 
     public function addComment(SaveCommentRequest $request, Ticket $ticket)
