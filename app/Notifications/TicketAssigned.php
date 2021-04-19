@@ -60,8 +60,8 @@ class TicketAssigned extends Notification
     {
         return [
             'icon' => 'far fa-calendar-check',
-            'route' => "/tickets/{$this->ticket}/show",
-            'activity' => $this->activity,
+            'ticket' => $this->ticket,
+            'message' => $this->activity,
         ];
     }
 }

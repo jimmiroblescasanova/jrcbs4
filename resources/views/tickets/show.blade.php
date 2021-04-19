@@ -26,12 +26,10 @@
                                 style="color:{{ $ticket->tag->color }};"></i>
                         </li>
                         <li class="list-group-item">
-                            <b>Teléfono:</b> <span
-                                class="text-muted float-right">{{ $ticket->contact->phone }}</span>
+                            <b>Teléfono:</b> <span class="text-muted float-right">{{ $ticket->contact->phone }}</span>
                         </li>
                         <li class="list-group-item">
-                            <b>Email:</b> <span
-                                class="text-muted float-right">{{ $ticket->contact->email }}</span>
+                            <b>Email:</b> <span class="text-muted float-right">{{ $ticket->contact->email }}</span>
                         </li>
                         <li class="list-group-item">
                             <b>Asignado a:</b> <span
@@ -45,8 +43,9 @@
                         @endif
                     </ul>
 
-                    @if (!$ticket->ended_at)
-                        <a href="{{ route('tickets.close', $ticket) }}" class="btn btn-primary btn-block"><b>Finalizar</b></a>
+                    @if ($ticket->active)
+                        <a href="{{ route('tickets.close', $ticket) }}"
+                            class="btn btn-primary btn-block"><b>Finalizar</b></a>
                     @endif
                     <button type="button" class="btn btn-default btn-block" onclick="history.back();">Atrás</button>
                 </div>
@@ -63,32 +62,39 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <strong><i class="far fa-calendar-check mr-1"></i> Actividad a realizar</strong>
-                    <form action="{{ route('tickets.update', $ticket) }}" method="POST">
-                        @csrf @method('PATCH')
-                        <div class="row mt-3">
-                            <div class="col-12 col-sm-10">
-                                <x-form-select name="activity_id" :bind="$ticket" class="border-0 shadow-sm" :options="$activities" />
+                    <strong><i class="far fa-calendar-check mr-1 mb-3"></i> Actividad a realizar</strong>
+                    @if ($ticket->active)
+                        <form action="{{ route('tickets.update', $ticket) }}" method="POST">
+                            @csrf @method('PATCH')
+                            <div class="row mt-3">
+                                <div class="col-12 col-sm-10">
+                                    <x-form-select name="activity_id" :bind="$ticket" class="border-0 shadow-sm"
+                                        :options="$activities" />
+                                </div>
+                                <div class="col-12 col-sm-2">
+                                    <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+                                </div>
                             </div>
-                            <div class="col-12 col-sm-2">
-                                <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    @else
+                        <x-form-input name="" value="{{ $ticket->activity->name }}" disabled />
+                    @endif
                     <hr>
 
-                    <strong><i class="far fa-comment-alt mr-1"></i> Notas</strong>
+                    <strong><i class="far fa-comment-alt mr-1 mb-3"></i> Notas</strong>
                     <p class="text-muted">{{ $ticket->note }}</p>
                     <hr>
 
-                    <strong><i class="far fa-comment-dots mr-1 mb-3"></i> Comentarios</strong> <span class="badge badge-dark">{{ $ticket->comments()->count() }}</span>
+                    <strong><i class="far fa-comment-dots mr-1 mb-3"></i> Comentarios</strong> <span
+                        class="badge badge-dark">{{ $ticket->comments()->count() }}</span>
                     @if ($ticket->comments()->exists())
                         @foreach ($ticket->comments as $comment)
                             <!-- Message. Default to the left -->
                             <div class="direct-chat-msg">
                                 <div class="direct-chat-infos clearfix">
                                     <span class="direct-chat-name float-left">{{ $comment->user->name }}</span>
-                                    <span class="direct-chat-timestamp float-right">{{ $comment->created_at->format('d M Y, H:i') }}</span>
+                                    <span
+                                        class="direct-chat-timestamp float-right">{{ $comment->created_at->format('d M Y, H:i') }}</span>
                                 </div>
                                 <!-- /.direct-chat-infos -->
                                 <img class="direct-chat-img"
@@ -105,18 +111,20 @@
                     @endif
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                    <form action="{{ route('tickets.comment', $ticket) }}" method="POST">
-                        @csrf
-                        <div class="input-group">
-                            <input type="text" name="message" placeholder="Agrega un comentario ..."
-                                class="form-control">
-                            <span class="input-group-append">
-                                <button type="submit" class="btn btn-primary">Enviar</button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
+                @if ($ticket->active)
+                    <div class="card-footer">
+                        <form action="{{ route('tickets.comment', $ticket) }}" method="POST">
+                            @csrf
+                            <div class="input-group">
+                                <input type="text" name="message" placeholder="Agrega un comentario ..."
+                                    class="form-control">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                @endif
             </div>
             <!-- /.card -->
         </div>

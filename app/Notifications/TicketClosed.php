@@ -60,8 +60,8 @@ class TicketClosed extends Notification
     {
         return [
             'icon' => 'fas fa-check',
-            'route' => "/tickets/{$this->ticket}/show",
-            'activity' => $this->activity,
+            'ticket' => $this->ticket,
+            'message' => $this->activity,
         ];
     }
 }

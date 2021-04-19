@@ -21,7 +21,7 @@ class Activities extends Component
 
     public function clearVars()
     {
-        $this->name = '';
+        $this->reset('name');
     }
 
     public function addActivity()
@@ -62,7 +62,16 @@ class Activities extends Component
 
     public function deleteActivity($id)
     {
-        Activity::findOrFail($id)->delete();
+        $activity = Activity::findOrFail($id);
+
+        if (!$activity->tickets()->exists()) {
+            $activity->delete();
+        } else {
+            $this->emit('alert-error', [
+                'title' => 'Error al eliminar',
+                'message' => 'No se puede eliminar si tiene tickets activos.'
+            ]);
+        }
     }
 
     public function render()

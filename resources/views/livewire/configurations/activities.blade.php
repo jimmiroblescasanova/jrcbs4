@@ -20,7 +20,7 @@
                             <td scope="row">{{ $activity->name }}</td>
                             <td class="text-center">
                                 <a wire:click="updateActivity({{ $activity }})" href="#" class="mr-2"><i class="fas fa-edit"></i></a>
-                                <a onclick="deleteActivity({{ $activity->id }}, '{{ $activity->name }}')" href="#"><i class="fas fa-trash-alt" style="color:red;"></i></a>
+                                <a onclick="deleteRow({{ $activity->id }}, '{{ $activity->name }}', 'deleteActivity')" href="#"><i class="fas fa-trash-alt" style="color:red;"></i></a>
                             </td>
                         </tr>
                     @endforeach

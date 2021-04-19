@@ -11,7 +11,7 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" role="menu" style="">
-                    <a class="dropdown-item" href="#"><i class="fas fa-download mr-2"></i>Excel</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-download mr-2"></i>Exportar excel</a>
                     <a class="dropdown-item" href="#"><i class="fas fa-print mr-2"></i>Imprimir</a>
                 </div>
             </div>

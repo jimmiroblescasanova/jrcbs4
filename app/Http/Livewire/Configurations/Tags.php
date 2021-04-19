@@ -22,9 +22,9 @@ class Tags extends Component
 
     public function clearVars()
     {
-        $this->idTag = '';
-        $this->name = '';
-        $this->color = '';
+        $this->reset([
+            'idTag', 'name', 'color'
+        ]);
     }
 
     public function addTag()
@@ -68,7 +68,16 @@ class Tags extends Component
 
     public function deleteTag($id)
     {
-        Tag::findOrFail($id)->delete();
+        $tag = Tag::findOrFail($id);
+
+        if (!$tag->tickets()->exists()) {
+            $tag->delete();
+        } else {
+            $this->emit('alert-error', [
+                'title' => 'Error al eliminar',
+                'message' => 'No se puede eliminar la etiqueta si tiene tickets activos.'
+            ]);
+        }
     }
 
     public function render()

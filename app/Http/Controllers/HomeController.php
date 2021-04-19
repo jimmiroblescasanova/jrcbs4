@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $tickets = Ticket::where([
+            ['assigned_to', Auth::id()],
+            ['ended_at', '=', null]
+        ])->oldest()->limit(5)->get();
+
+        return view('home', [
+            'tickets' => $tickets,
+        ]);
     }
 }

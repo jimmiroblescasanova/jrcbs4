@@ -22,7 +22,7 @@
                             <td class="text-center"><i class="fas fa-circle" style="color: {{ $tag->color }}"></i></td>
                             <td class="text-center">
                                 <a href="#" wire:click="updateTag({{ $tag->id }})" class="mr-2"><i class="fas fa-edit"></i></a>
-                                <a href="#" onclick="deleteTag({{ $tag->id }}, '{{ $tag->name }}')"><i class="fas fa-trash-alt" style="color: red;"></i></a>
+                                <a href="#" onclick="deleteRow({{ $tag->id }}, '{{ $tag->name }}', 'deleteTag')"><i class="fas fa-trash-alt" style="color: red;"></i></a>
                             </td>
                         </tr>
                     @endforeach

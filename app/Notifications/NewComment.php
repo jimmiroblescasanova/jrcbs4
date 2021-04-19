@@ -61,8 +61,8 @@ class NewComment extends Notification
     {
         return [
             'icon' => 'far fa-comment-dots',
-            'route' => "/tickets/{$this->ticket}/show",
-            'activity' => $this->activity,
+            'ticket' => $this->ticket,
+            'message' => $this->activity,
         ];
     }
 }
