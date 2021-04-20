@@ -1,7 +1,7 @@
 <div>
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="card-title"><i class="fas fa-clipboard-list"></i> Tabla de actividades</h3>
+            <h3 class="card-title"><i class="fas fa-clipboard-list mr-2"></i>Tabla de actividades</h3>
             <div class="card-tools">
                 {{ $activities->links() }}
             </div>
@@ -28,7 +28,7 @@
             </table>
         </div>
         <div class="card-footer clearfix">
-            <button wire:click="addActivity" type="button" class="btn btn-primary btn-sm float-right">Nuevo</button>
+            <button wire:click="addActivity" type="button" class="btn btn-primary btn-sm float-right"><i class="fas fa-pencil-alt mr-2"></i>Nuevo</button>
         </div>
     </div>
     <div wire:ignore.self class="modal fade" id="activitiesModal" style="display: none;" aria-hidden="true">

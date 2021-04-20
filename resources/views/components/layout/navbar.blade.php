@@ -37,6 +37,13 @@
             </div>
         </li>
 
+        <!--  TODO lists  -->
+        <li class="nav-item">
+            <a class="nav-link" href="#" role="button">
+                <i class="fas fa-check-double"></i>
+            </a>
+        </li>
+
         <!-- Messages Dropdown Menu -->
         {{-- <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">

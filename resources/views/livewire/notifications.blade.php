@@ -17,8 +17,7 @@
                     </button>
                 @endforeach
                 <div class="dropdown-divider"></div>
-                <button type="button" wire:click="readAll" class="dropdown-item dropdown-footer">Marcar como
-                    leídas</button>
+                <button type="button" wire:click="readAll" class="dropdown-item dropdown-footer">Marcar como leídas</button>
             </div>
             @endif
         </li>

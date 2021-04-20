@@ -1,7 +1,7 @@
 <div>
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="card-title"><i class="fas fa-tags"></i> Tabla de etiquetas</h3>
+            <h3 class="card-title"><i class="fas fa-tags mr-2"></i>Tabla de etiquetas</h3>
             <div class="card-tools">
                 {{ $tags->links() }}
             </div>
@@ -30,7 +30,7 @@
             </table>
         </div>
         <div class="card-footer">
-            <button type="button" wire:click="addTag" class="btn btn-primary btn-sm float-right">Nuevo</button>
+            <button type="button" wire:click="addTag" class="btn btn-primary btn-sm float-right"><i class="fas fa-pencil-alt mr-2"></i>Nuevo</button>
         </div>
     </div>
     <div wire:ignore.self class="modal fade" id="modal-tags" style="display: none;" aria-hidden="true">

@@ -4,11 +4,20 @@
             <h1>Empresas / Clientes</h1>
         </div>
         <div class="col-sm-6">
-            <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal"
-                data-target="#createCompnayModal"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
+            <div class="btn-group float-right">
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createCompnayModal">
+                    <i class="fa fa-pencil-alt mr-2" aria-hidden="true"></i>Nuevo
+                </button>
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                    {{-- <a class="dropdown-item" href="#"><i class="fas fa-upload mr-2"></i>Importar</a> --}}
+                    <a class="dropdown-item" href="{{ route('companies.export') }}"><i class="fas fa-download mr-2"></i>Exportar</a>
+                </div>
+            </div>
         </div>
     </x-slot>
-
 
     @livewire('companies.show-companies-table')
 
@@ -37,21 +46,22 @@
 
             function confirmDeletion(id, name) {
                 swal({
-                title: "Confirmar",
-                text: "Se eliminará: " + name + ", no se podrá recuperar finalizado el proceso.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        Livewire.emit('deleteCompany', id);
-                        swal("La empresa ha sido eliminada.", {
-                            icon: "success",
-                        });
-                    }
-                });
+                        title: "Confirmar",
+                        text: "Se eliminará: " + name + ", no se podrá recuperar finalizado el proceso.",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            Livewire.emit('deleteCompany', id);
+                            swal("La empresa ha sido eliminada.", {
+                                icon: "success",
+                            });
+                        }
+                    });
             }
+
         </script>
     </x-slot>
 </x-main-layout>

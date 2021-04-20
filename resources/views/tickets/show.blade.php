@@ -58,7 +58,7 @@
             <!-- About Me Box -->
             <div class="card">
                 <div class="card-header border-0">
-                    <h3 class="card-title">Información capturada</h3>
+                    <h3 class="card-title"><i class="fas fa-info mr-2"></i>Información capturada</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">

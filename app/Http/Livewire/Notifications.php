@@ -12,20 +12,20 @@ class Notifications extends Component
 
     public function show($id, DatabaseNotification $notification)
     {
-        $notification->delete();
+        $notification->markAsRead();
 
         return redirect()->route('tickets.show', $id);
     }
 
     public function mount()
     {
-        $this->notifications = Auth::user()->notifications;
+        $this->notifications = Auth::user()->unreadNotifications;
     }
 
     public function readAll()
     {
-        $this->notifications->delete();
-        $this->notifications = Auth::user()->notifications;
+        $this->notifications->markAsRead();
+        $this->notifications = Auth::user()->unreadNotifications;
     }
 
     public function render()

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Configuraciones del host</h3>
+        <h3 class="card-title"><i class="fas fa-user-cog mr-2"></i>Configuraciones del host</h3>
     </div>
     <form role="form" wire:submit.prevent='save'>
         <div class="card-body">
@@ -29,7 +29,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary btn-sm">Actualizar datos</button>
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt mr-2"></i>Actualizar datos</button>
             <button type="button" class="btn btn-default btn-sm float-right" onClick="history.back();">Atrás</button>
         </div>
     </form>
