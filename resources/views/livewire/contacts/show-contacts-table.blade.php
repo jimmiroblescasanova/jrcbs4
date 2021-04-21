@@ -29,7 +29,7 @@
                         <x-tables.table-heading sortable wire:click="sortBy('lastname')" :direction="$sortField === 'lastname' ? $sortDirection : null">Apellidos</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('email')" :direction="$sortField === 'email' ? $sortDirection : null">Email</x-tables.table-heading>
                         <th>Teléfono</th>
-                        <th style="width: 10%;">Opciones</th>
+                        @can('edit contacts') <th style="width: 10%;">Opciones</th> @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,8 @@
                             <td>{{ $contact->lastname }}</td>
                             <td>{{ $contact->email }}</td>
                             <td>{{ $contact->phone }}</td>
-                            <td class="text-center">
+                            @can('edit contacts')
+                                <td class="text-center">
                                 <a href="{{ route('contacts.edit', $contact) }}" type="button"
                                     class="btn btn-xs btn-default mr-2">
                                     <i class="fas fa-edit"></i>
@@ -49,6 +50,7 @@
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </td>
+                            @endcan
                         </tr>
                     @empty
                         <tr>

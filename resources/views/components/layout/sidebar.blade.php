@@ -45,14 +45,21 @@
                     message="Inicio"
                 />
 
-                <li class="nav-header">CATALOGOS</li>
-                <x-partials.sidebar-nav-link :route="route('companies.index')" :active="request()->routeIs('companies.*')" class="fas fa-building" message="Empresas" />
-                <x-partials.sidebar-nav-link :route="route('contacts.index')" class="fas fa-users" :active="request()->routeIs('contacts.*')" message="Contactos" />
+                @canany(['show companies', 'show contacts'])
+                    <li class="nav-header">CATALOGOS</li>
+                    @can('show companies')
+                        <x-partials.sidebar-nav-link :route="route('companies.index')" :active="request()->routeIs('companies.*')" class="fas fa-building" message="Empresas" />
+                    @endcan
+                    @can('show contacts')
+                        <x-partials.sidebar-nav-link :route="route('contacts.index')" class="far fa-id-card" :active="request()->routeIs('contacts.*')" message="Contactos" />
+                    @endcan
+                @endcanany
 
                 <li class="nav-header">SEGUIMIENTOS</li>
                 <x-partials.sidebar-nav-link :route="route('tickets.index')" :active="request()->routeIs('tickets.*')" class="fas fa-calendar-check" message="Tickets" />
 
                 <li class="nav-header">OTROS</li>
+                <x-partials.sidebar-nav-link :route="route('users.index')" :active="request()->routeIs('users.*')" class="fas fa-users" message="Usuarios" />
                 <x-partials.sidebar-nav-link :route="route('configurations.index')" :active="request()->routeIs('configurations.*')" class="fas fa-cog" message="Configuraciones" />
 
                 <li class="nav-item">

@@ -9,10 +9,10 @@
         <input type="hidden" wire:model.lazy="idCompany">
         <div class="modal-body">
             <div class="form-group">
-                <x-forms.input wire:model.lazy="name" name="update.name">Nombre de la empresa</x-forms.input>
+                <x-forms.input label="Nombre de la empresa" wire:model.lazy="name" name="name" />
             </div>
             <div class="form-group">
-                <x-forms.input wire:model.lazy="rfc" name="update.rfc">RFC de la empresa</x-forms.input>
+                <x-forms.input label="RFC de la empresa" wire:model.lazy="rfc" name="rfc" />
             </div>
         </div>
         <div class="modal-footer">

@@ -3,9 +3,11 @@
         <div class="col-sm-6">
             <h1>Contactos</h1>
         </div>
-        <div class="col-sm-6">
-            <a href="{{ route('contacts.create') }}" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</a>
-        </div>
+        @can('create contacts')
+            <div class="col-sm-6">
+                <a href="{{ route('contacts.create') }}" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</a>
+            </div>
+        @endcan
     </x-slot>
 
     @livewire('contacts.show-contacts-table')

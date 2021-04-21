@@ -18,7 +18,8 @@ class CreateCompanyForm extends Component
     {
         $this->validate();
 
-        Company::create(['name' => $this->name,
+        Company::create([
+            'name' => $this->name,
             'rfc' => $this->rfc,
         ]);
 

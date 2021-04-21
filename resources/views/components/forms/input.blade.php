@@ -1,6 +1,7 @@
-@props(['type' => 'text', 'name', 'value' => null])
+@props(['type' => 'text', 'name', 'value' => null, 'label' => null])
 
-<label for="{{ $name }}">{{ $slot }}</label>
+<label for="{{ $name }}">{{ $label ?? $slot }}</label>
+
 <input
     type="{{ $type }}"
     id="{{ $name }}"
@@ -9,6 +10,7 @@
     value="{{ old($name, $value) }}"
     class="form-control @error($name) is-invalid @enderror"
 />
+
 @error($name)
     <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
