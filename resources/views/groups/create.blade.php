@@ -21,23 +21,18 @@
 
     <x-slot name="custom_scripts">
         <script>
-            // check companies
-            $("#all_companies").change(function() {
+            $(".toggle-all").change(function() {
                 var status = $(this).prop('checked') ? 'checked' : false;
-                $(".companies").prop("checked", status);
-            });
-            $('.companies').change(function() {
-                countCheckedInputs('companies')
+                let idName = $(this).parent().parent().parent().attr('id');
+
+                $('.'+idName).prop("checked", status);
             });
 
-            // check contacts
-            /* $("#all_contacts").change(function() {
-                var status = $(this).prop('checked') ? 'checked' : false;
-                $(".contacts").prop("checked", status);
+            $("input[name='permissions[]']").change(function() {
+                let idName = $(this).parent().parent().parent().attr('id');
+                console.log(idName);
+                countCheckedInputs(idName);
             });
-            $('.contacts').change(function() {
-                countCheckedInputs('contacts')
-            }); */
 
             function countCheckedInputs(id) {
                 var inputSize = $('#' + id + ' :checkbox:checked').length;

@@ -13,7 +13,7 @@
                 <label class="form-check-label">
                     <input
                     type="checkbox"
-                    class="form-check-input"
+                    class="form-check-input toggle-all"
                     id="all_companies"/>
                     Todos
                 </label>
@@ -60,7 +60,7 @@
                 <label class="form-check-label">
                     <input
                     type="checkbox"
-                    class="form-check-input"
+                    class="form-check-input toggle-all"
                     id="all_contacts"/>
                     Todos
                 </label>
