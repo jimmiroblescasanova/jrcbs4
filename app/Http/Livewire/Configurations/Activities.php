@@ -67,7 +67,8 @@ class Activities extends Component
         if (!$activity->tickets()->exists()) {
             $activity->delete();
         } else {
-            $this->emit('alert-error', [
+            $this->emit('LiveAlert', [
+                'icon' => 'error',
                 'title' => 'Error al eliminar',
                 'message' => 'No se puede eliminar si tiene tickets activos.'
             ]);

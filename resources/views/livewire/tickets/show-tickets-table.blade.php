@@ -47,7 +47,7 @@
     </div>
     <div class="card">
         <div class="card-body p-0 table-responsive-sm">
-            <table class="table table-striped table-inverse">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <x-tables.table-heading sortable wire:click="sortBy('created_at')" :direction="$sortField === 'created_at' ? $sortDirection : null">Fecha</x-tables.table-heading>
@@ -55,7 +55,7 @@
                         <x-tables.table-heading sortable wire:click="sortBy('activity')" :direction="$sortField === 'activity_id' ? $sortDirection : null">Actividad</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('user')" :direction="$sortField === 'user' ? $sortDirection : null">Asignado a</x-tables.table-heading>
                         <th>Etiqueta</th>
-                        <th style="width: 10%;">Opciones</th>
+                        @can('edit tickets')<th style="width: 10%;">Opciones</th>@endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -66,9 +66,11 @@
                             <td>{{ $ticket->activity->name }}</td>
                             <td>{{ $ticket->assignedTo->name }}</td>
                             <td>{!! tag_label($ticket->tag) !!}</td>
-                            <td class="text-center">
-                                <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-default btn-xs"><i class="fas fa-eye"></i></a>
-                            </td>
+                            @can('edit tickets')
+                                <td class="text-center">
+                                    <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-default btn-xs"><i class="fas fa-eye"></i></a>
+                                </td>
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>

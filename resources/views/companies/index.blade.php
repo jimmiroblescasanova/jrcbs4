@@ -64,9 +64,6 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             Livewire.emit('deleteCompany', id);
-                            swal("La empresa ha sido eliminada.", {
-                                icon: "success",
-                            });
                         }
                     });
             }

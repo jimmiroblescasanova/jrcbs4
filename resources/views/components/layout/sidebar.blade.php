@@ -55,12 +55,20 @@
                     @endcan
                 @endcanany
 
-                <li class="nav-header">SEGUIMIENTOS</li>
-                <x-partials.sidebar-nav-link :route="route('tickets.index')" :active="request()->routeIs('tickets.*')" class="fas fa-calendar-check" message="Tickets" />
+                @can('show tickets')
+                    <li class="nav-header">SEGUIMIENTOS</li>
+                    <x-partials.sidebar-nav-link :route="route('tickets.index')" :active="request()->routeIs('tickets.*')" class="fas fa-calendar-check" message="Tickets" />
+                @endcan
 
-                <li class="nav-header">OTROS</li>
-                <x-partials.sidebar-nav-link :route="route('users.index')" :active="request()->routeIs('users.*')" class="fas fa-users" message="Usuarios" />
-                <x-partials.sidebar-nav-link :route="route('configurations.index')" :active="request()->routeIs('configurations.*')" class="fas fa-cog" message="Configuraciones" />
+                @canany(['show users', 'show activities', 'show tags', 'show groups', 'edit hosts'])
+                    <li class="nav-header">OTROS</li>
+                    @can('show users')
+                        <x-partials.sidebar-nav-link :route="route('users.index')" :active="request()->routeIs('users.*')" class="fas fa-users" message="Usuarios" />
+                    @endcan
+                    @canany(['show activities', 'show tags', 'show groups', 'edit hosts'])
+                        <x-partials.sidebar-nav-link :route="route('configurations.index')" :active="request()->routeIs('configurations.*')" class="fas fa-cog" message="Configuraciones" />
+                    @endcanany
+                @endcanany
 
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link"

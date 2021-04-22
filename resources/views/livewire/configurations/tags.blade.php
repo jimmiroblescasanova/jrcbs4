@@ -12,54 +12,66 @@
                     <tr>
                         <th>Nombre</th>
                         <th style="width: 25%;">Color</th>
-                        <th style="width: 15%;">Acción</th>
+                        @can('edit tags') <th style="width: 15%;">Acción</th> @endcan
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($tags as $tag)
                         <tr>
                             <td scope="row">{{ $tag->name }}</td>
-                            <td class="text-center"><i class="fas fa-circle" style="color: {{ $tag->color }}"></i></td>
-                            <td class="text-center">
-                                <a href="#" wire:click="updateTag({{ $tag->id }})" class="mr-2"><i class="fas fa-edit"></i></a>
-                                <a href="#" onclick="deleteRow({{ $tag->id }}, '{{ $tag->name }}', 'deleteTag')"><i class="fas fa-trash-alt" style="color: red;"></i></a>
+                            <td class="text-center"><i class="fas fa-circle" style="color: {{ $tag->color }}"></i>
                             </td>
+                            @can('edit tags')
+                                <td class="text-center">
+                                    <a href="#" wire:click="updateTag({{ $tag->id }})" class="mr-2"><i
+                                            class="fas fa-edit"></i></a>
+                                    <a href="#"
+                                        onclick="deleteRow({{ $tag->id }}, '{{ $tag->name }}', 'deleteTag')"><i
+                                            class="fas fa-trash-alt" style="color: red;"></i></a>
+                                </td>
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="card-footer">
-            <button type="button" wire:click="addTag" class="btn btn-primary btn-sm float-right"><i class="fas fa-pencil-alt mr-2"></i>Nuevo</button>
-        </div>
-    </div>
-    <div wire:ignore.self class="modal fade" id="modal-tags" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Agregar etiqueta</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <form role="form" wire:submit.prevent='save'>
-                    <input type="hidden" wire:model.lazy="idTag">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <x-forms.input name="name" wire:model.lazy="name">Nombre de la etiqueta</x-forms.input>
-                        </div>
-                        <div class="form-group">
-                            <x-forms.input type="color" name="color" wire:model.lazy="color">Color</x-forms.input>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-                    </div>
-                </form>
+        @can('create tags')
+            <div class="card-footer">
+                <button type="button" wire:click="addTag" class="btn btn-primary btn-sm float-right"><i
+                        class="fas fa-pencil-alt mr-2"></i>Nuevo</button>
             </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+        @endcan
     </div>
+
+    @canany(['create tags', 'edit tags'])
+        <div wire:ignore.self class="modal fade" id="modal-tags" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Agregar etiqueta</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <form role="form" wire:submit.prevent='save'>
+                        <input type="hidden" wire:model.lazy="idTag">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <x-forms.input name="name" wire:model.lazy="name">Nombre de la etiqueta</x-forms.input>
+                            </div>
+                            <div class="form-group">
+                                <x-forms.input type="color" name="color" wire:model.lazy="color">Color</x-forms.input>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    @endcanany
 </div>

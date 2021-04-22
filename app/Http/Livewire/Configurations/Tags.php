@@ -73,7 +73,8 @@ class Tags extends Component
         if (!$tag->tickets()->exists()) {
             $tag->delete();
         } else {
-            $this->emit('alert-error', [
+            $this->emit('LiveAlert', [
+                'icon' => 'error',
                 'title' => 'Error al eliminar',
                 'message' => 'No se puede eliminar la etiqueta si tiene tickets activos.'
             ]);

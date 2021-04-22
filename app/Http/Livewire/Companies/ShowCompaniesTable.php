@@ -52,7 +52,20 @@ class ShowCompaniesTable extends Component
 
     public function deleteCompany(Company $company)
     {
-        $company->delete();
+        if ($company->contacts()->exists()) {
+            $this->emit('LiveAlert', [
+                'icon' => 'error',
+                'title' => 'Error al eliminar',
+                'message' => 'No se puede eliminar si tiene contactos asociados.'
+            ]);
+        } else {
+            $company->delete();
+            $this->emit('LiveAlert', [
+                'icon' => 'success',
+                'title' => 'Eliminado',
+                'message' => 'La empresa ha sido eliminada correctamente.'
+            ]);
+        }
     }
 
     public function render()

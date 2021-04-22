@@ -15,7 +15,7 @@ class ConfigurationsController extends Controller
     public function index()
     {
         return view('configurations.index', [
-            'roles' => Role::pluck('name', 'id'),
+            'roles' => Role::all()->pluck('name'),
         ]);
     }
 }

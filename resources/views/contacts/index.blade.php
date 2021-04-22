@@ -25,9 +25,6 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         Livewire.emit('deleteContact', id);
-                        swal("Ok! El contacto ha sido eliminado", {
-                            icon: "success",
-                        });
                     }
                 });
             }

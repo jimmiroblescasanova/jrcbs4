@@ -46,7 +46,20 @@ class ShowContactsTable extends Component
 
     public function deleteContact(Contact $contact)
     {
-        $contact->delete();
+        if ($contact->tickets()->exists()) {
+            $this->emit('LiveAlert', [
+                'icon' => 'error',
+                'title' => 'Error al eliminar',
+                'message' => 'No se puede eliminar si tiene tickets activos.'
+            ]);
+        } else {
+            $contact->delete();
+            $this->emit('LiveAlert', [
+                'icon' => 'success',
+                'title' => 'Eliminación exitosa',
+                // 'message' => 'No se puede eliminar si tiene tickets activos.'
+            ]);
+        }
     }
 
     public function render()

@@ -7,6 +7,11 @@ use Spatie\Permission\Models\Role;
 
 class GroupsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function create()
     {
         $role = new Role();
@@ -25,13 +30,16 @@ class GroupsController extends Controller
         return redirect()->route('configurations.index');
     }
 
-    public function edit($id)
+    public function edit($name)
     {
-        $role = Role::findById($id);
+        $role = Role::findByName($name);
 
-        return view('groups.edit', [
-            'role' => $role,
-        ]);
+        if ($role->name == 'administrador') {
+            session()->flash('edit-role', 'No se puede editar el usuario administrador');
+            return redirect()->back();
+        }
+
+        return view('groups.edit', compact('role'));
     }
 
     public function update(Request $request, Role $role)

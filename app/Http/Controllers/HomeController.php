@@ -25,10 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::where([
-            ['assigned_to', Auth::id()],
-            ['ended_at', '=', null]
-        ])->oldest()->limit(5)->get();
+        $tickets = Ticket::query()
+            ->where([
+                ['assigned_to', Auth::id()],
+                ['ended_at', '=', null]
+            ])
+            ->oldest()
+            ->limit(5)
+            ->get();
 
         return view('home', [
             'tickets' => $tickets,
