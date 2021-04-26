@@ -47,6 +47,10 @@ class TicketsController extends Controller
             'activity' => $ticket->activity->name,
         ];
 
+        if ($ticket->assigned_to == Auth::id()) {
+            session()->increment('pendingTickets');
+        }
+
         User::findOrFail($ticket->assigned_to)->notify(new TicketAssigned($data));
 
         session()->flash('message', "Registro agregado correctamente.");
@@ -82,6 +86,8 @@ class TicketsController extends Controller
             'id' => $ticket->id,
             'message' => 'Ticket cerrado',
         ];
+
+        session()->decrement('pendingTickets');
 
         User::findOrFail($ticket->created_by)->notify(new TicketClosed($data));
 
