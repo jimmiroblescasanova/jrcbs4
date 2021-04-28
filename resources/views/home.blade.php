@@ -5,19 +5,8 @@
 
     <div class="row">
         <div class="col-9">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Titulo del card</h3>
-                </div>
-                <div class="card-body">
-                    Start creating your amazing application!
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                    Footer
-                </div>
-                <!-- /.card-footer-->
-            </div>
+            @livewire('reminders')
+
         </div>
         <div class="col-3">
             <div class="card card-danger card-outline">
@@ -30,13 +19,15 @@
                         @foreach ($tickets as $ticket)
                             <li class="item">
                                 <div class="product-img">
-                                    <img src="https://ui-avatars.com/api/?name={{ $ticket->contact->name }}" alt="{{ $ticket->contact->name }}" class="img-size-50 rounded-circle">
+                                    <img src="https://ui-avatars.com/api/?name={{ $ticket->contact->name }}"
+                                        alt="{{ $ticket->contact->name }}" class="img-size-50 rounded-circle">
                                 </div>
                                 <div class="product-info">
-                                    <a href="{{ route('tickets.show', $ticket) }}" class="product-title">{{ $ticket->activity->name }}
-                                        {{-- <span class="badge float-right text-light" style="background-color:{{ $ticket->tag->color }};">{{ $ticket->tag->name }}</span> --}}
+                                    <a href="{{ route('tickets.show', $ticket) }}"
+                                        class="product-title">{{ $ticket->activity->name }}
                                     </a>
-                                    <span class="float-right text-xs">{{ $ticket->created_at->diffForHumans() }}</span>
+                                    <span
+                                        class="float-right text-xs">{{ $ticket->created_at->diffForHumans() }}</span>
                                     <span class="product-description">
                                         {{ Str::limit($ticket->note, 25, '...') }}
                                     </span>
@@ -54,4 +45,27 @@
             </div>
         </div>
     </div>
+
+    <x-slot name="custom_scripts">
+        <script>
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: "dd-mm-yyyy",
+                titleFormat: "MM yyyy",
+                language: 'es',
+                startDate: 'today',
+                todayBtn: 'linked',
+                todayHighlight: true,
+                daysOfWeekDisabled: [0],
+                disableTouchKeyboard: true,
+            });
+
+            $('#addReminderBtn').click(function(e) {
+                e.preventDefault();
+                $(this).addClass('d-none');
+                $('#addReminderForm').removeClass('d-none');
+            });
+        </script>
+    </x-slot>
+
 </x-main-layout>
