@@ -18,7 +18,7 @@
 
                     <h3 class="profile-username text-center">{{ $ticket->contact->name }}</h3>
 
-                    <p class="text-muted text-center">{{ $ticket->contact->company->name }}</p>
+                    <p class="text-muted text-center">{{ $ticket->contact->company->name ?? '*No se ha capturado la empresa' }}</p>
 
                     <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
