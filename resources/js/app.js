@@ -1,5 +1,7 @@
 require("./bootstrap");
 
+window.moment = require("moment");
+
 window.livewire.on("LiveAlert", (event) => {
     swal({
         icon: event.icon,
