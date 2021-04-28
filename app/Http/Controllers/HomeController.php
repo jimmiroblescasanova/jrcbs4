@@ -37,7 +37,6 @@ class HomeController extends Controller
 
         return view('home', [
             'tickets' => $tickets,
-            'reminders' => Reminder::all(),
         ]);
     }
 }
