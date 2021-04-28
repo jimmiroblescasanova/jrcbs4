@@ -23,7 +23,7 @@
                     <ul class="list-group list-group-unbordered mb-3">
                         {{-- <li class="list-group-item">
                             <b>{{ $ticket->tag->name }}</b> <i class="fas fa-circle float-right"
-                                style="color:{{ $ticket->tag->color }};"></i>
+                                style="color:"></i>
                         </li> --}}
                         <li class="list-group-item">
                             <b>Teléfono:</b> <span class="text-muted float-right">{{ $ticket->contact->phone }}</span>
