@@ -62,7 +62,7 @@
                     @foreach ($tickets as $ticket)
                         <tr>
                             <td>{{ $ticket->created_at->format('d/m/Y') }}</td>
-                            <td>{{ $ticket->contact->name }}</td>
+                            <td>{{ $ticket->contact->full_name }}</td>
                             <td>{{ $ticket->activity->name }}</td>
                             <td>{{ $ticket->assignedTo->name }}</td>
                             <td>{!! tag_label($ticket->tag) !!}</td>

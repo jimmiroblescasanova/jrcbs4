@@ -29,8 +29,9 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt mr-2"></i>Actualizar datos</button>
-            <button type="button" class="btn btn-default btn-sm float-right" onClick="history.back();">Atrás</button>
+            <div class="float-right">
+                <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Actualizar datos</button>
+            </div>
         </div>
     </form>
     <!-- /.card-footer-->

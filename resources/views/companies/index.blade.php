@@ -1,7 +1,7 @@
 <x-main-layout>
     <x-slot name="header">
         <div class="col-sm-6">
-            <h1>Empresas / Clientes</h1>
+            <h1><i class="far fa-building mr-2"></i>Empresas / Clientes</h1>
         </div>
         @can('create companies')
             <div class="col-sm-6">

@@ -1,7 +1,7 @@
 <x-main-layout>
     <x-slot name="header">
         <div class="col-sm-6">
-            <h1>Crear un contacto</h1>
+            <h1><i class="fas fa-pencil-alt mr-2"></i>Crear un contacto</h1>
         </div>
     </x-slot>
 
@@ -10,8 +10,10 @@
             @csrf
             @include('contacts._form')
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-                <button type="button" class="btn btn-default btn-sm float-right" onclick="history.back();">Atrás</button>
+                <div class="float-right">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save mr-2"></i>Guardar</button>
+                    <button type="button" class="btn btn-default btn-sm" onclick="history.back();"><i class="fas fa-ban mr-2"></i>Cancelar</button>
+                </div>
             </div>
         </form>
     </div>

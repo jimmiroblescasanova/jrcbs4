@@ -5,7 +5,7 @@
         </div>
         @can('create contacts')
             <div class="col-sm-6">
-                <a href="{{ route('contacts.create') }}" class="btn btn-primary btn-sm float-right"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</a>
+                <a href="{{ route('contacts.create') }}" class="btn btn-primary btn-sm float-right"><i class="fas fa-pencil-alt mr-2" aria-hidden="true"></i>Nuevo</a>
             </div>
         @endcan
     </x-slot>

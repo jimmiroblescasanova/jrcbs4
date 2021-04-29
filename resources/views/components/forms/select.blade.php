@@ -1,10 +1,17 @@
-@props(['name', 'options' => null, 'label' => null])
+@props(['name', 'options' => null, 'label' => null,])
 
 @if ($label)
     <label for="{{ $name }}">{{ $label }}</label>
 @endif
 
-<select class="form-control @error($name) is-invalid @enderror" name="{{ $name }}" id="{{ $name }}">
+<select
+    {{ $attributes->class([
+            'form-control',
+            ($errors->has($name)) ? 'is-invalid' : '',
+        ])
+    }}
+    name="{{ $name }}"
+    id="{{ $name }}" >
     @if ($options)
         @foreach ($options as $key => $value)
             <option
@@ -19,6 +26,6 @@
 
 @error($name)
     <span class="invalid-feedback" role="alert">
-        <strong>{{ $message }}</strong>
+        {{ $message }}
     </span>
 @enderror

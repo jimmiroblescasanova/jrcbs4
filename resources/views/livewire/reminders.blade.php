@@ -31,7 +31,7 @@
     <!-- /.card-body -->
     <div class="card-footer">
         <button type="button" id="addReminderBtn" class="btn btn-primary btn-sm float-right">
-            <i class="fas fa-plus mr-2"></i>Nuevo recordatorio
+            <i class="fas fa-pencil-alt mr-2"></i>Nuevo recordatorio
         </button>
         <form id="addReminderForm" wire:submit.prevent='save' class="d-none" autocomplete="off">
             <div class="form-row">

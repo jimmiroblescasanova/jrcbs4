@@ -16,7 +16,7 @@
                             alt="User profile picture">
                     </div>
 
-                    <h3 class="profile-username text-center">{{ $ticket->contact->name }}</h3>
+                    <h3 class="profile-username text-center">{{ $ticket->contact->full_name }}</h3>
 
                     <p class="text-muted text-center">{{ $ticket->contact->company->name ?? '*No se ha capturado la empresa' }}</p>
 
@@ -45,9 +45,9 @@
 
                     @if ($ticket->active)
                         <a href="{{ route('tickets.close', $ticket) }}"
-                            class="btn btn-primary btn-block"><b>Finalizar</b></a>
+                            class="btn btn-primary btn-block"><b><i class="fas fa-thumbs-up mr-2"></i>Finalizar</b></a>
                     @endif
-                    <button type="button" class="btn btn-default btn-block" onclick="history.back();">Atrás</button>
+                    <button type="button" class="btn btn-default btn-block" onclick="history.back();"><i class="far fa-hand-point-left mr-2"></i>Regresar</button>
                 </div>
                 <!-- /.card-body -->
             </div>

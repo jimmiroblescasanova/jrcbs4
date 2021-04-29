@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="card">
-        <div class="card-body">
-            <form action="{{ route('users.update', $user) }}" method="POST">
+        <form action="{{ route('users.update', $user) }}" method="POST">
+            <div class="card-body">
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -35,12 +35,14 @@
                         </x-forms.select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-sm float-right"><i
-                            class="fas fa-check mr-2"></i>Guardar</button>
+            </div><!-- /.card-body -->
+            <div class="card-footer">
+                <div class="float-right">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save mr-2"></i>Guardar</button>
+                    <button type="button" class="btn btn-default btn-sm" onclick="history.back();"><i class="fas fa-ban mr-2"></i>Cancelar</button>
                 </div>
-            </form>
-        </div><!-- /.card-body -->
+            </div>
+        </form>
     </div>
 
 </x-main-layout>

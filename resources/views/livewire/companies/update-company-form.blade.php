@@ -16,8 +16,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary btn-sm">Actualizar</button>
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Actualizar</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fas fa-ban mr-2"></i>Cancelar</button>
         </div>
     </form>
 </div>
