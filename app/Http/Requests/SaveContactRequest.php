@@ -25,7 +25,7 @@ class SaveContactRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:5'],
-            'lastname' => ['required', 'string', 'min:5'],
+            'lastname' => ['nullable', 'string'],
             'phone' => ['nullable', 'digits:10'],
             'email' => ['nullable', 'email'],
             'company_id' => ['nullable', 'exists:companies,id'],
