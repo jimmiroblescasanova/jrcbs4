@@ -33,7 +33,7 @@ class TicketAssigned extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -44,10 +44,14 @@ class TicketAssigned extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = url(route('tickets.show', $this->ticket));
+
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Ticket asignado')
+            ->greeting('Hola!')
+            ->line('Se te ha asignado un nuevo ticket.')
+            ->action('Click para ver', $url)
+            ->line('Saludos!');
     }
 
     /**

@@ -184,6 +184,11 @@ return [
         'title'                 => 'título',
         'username'              => 'usuario',
         'year'                  => 'año',
+        'attachment'            => 'archivo adjunto',
+        'activity_id'           => 'actividad',
+        'tag_id'                => 'etiqueta',
+        'assigned_to'           => 'asignado a',
+        'contact_id'            => 'contacto',
     ],
 
 ];

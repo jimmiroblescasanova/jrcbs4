@@ -30,6 +30,7 @@ class SaveTicketRequest extends FormRequest
             'note' => ['nullable', 'string', 'max:255'],
             'created_by' => ['required', 'exists:users,id'],
             'assigned_to' => ['required', 'exists:users,id'],
+            'attachment' => ['file', 'mimes:png,jpg,pdf,xls,xlsx'],
         ];
     }
 }

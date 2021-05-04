@@ -42,6 +42,11 @@ class Ticket extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
     public function scopeOrderByContact($query, $direction = 'desc')
     {
         $query->orderBy(

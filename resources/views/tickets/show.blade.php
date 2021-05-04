@@ -85,6 +85,14 @@
                     <p class="text-muted">{{ $ticket->note }}</p>
                     <hr>
 
+                    <strong><i class="fas fa-link mr-1 mb-3"></i> Archivos adjuntos</strong>
+                    <ul class="list-unstyled">
+                        @foreach ($ticket->attachments as $attachment)
+                            <li><a href="{{ Storage::url($attachment->route) }}" target="_blank" class="btn-link text-secondary"><i class="fas fa-paperclip mr-2"></i>{{ $attachment->filename }}</a></li>
+                        @endforeach
+                    </ul>
+                    <hr>
+
                     <strong><i class="far fa-comment-dots mr-1 mb-3"></i> Comentarios</strong> <span
                         class="badge badge-dark">{{ $ticket->comments()->count() }}</span>
                     @if ($ticket->comments()->exists())

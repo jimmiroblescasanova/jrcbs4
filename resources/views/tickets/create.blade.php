@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="card">
-        <form action="{{ route('tickets.store') }}" method="POST">
+        <form action="{{ route('tickets.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="created_by" value="{{ Auth::id() }}">
             <div class="card-body">
@@ -43,19 +43,32 @@
                         <div class="form-group">
                             <x-forms.select name="assigned_to" class="select2" label="Asignar a">
                                 <option></option>
-                                @foreach ($users as $id=>$user)
+                                @foreach ($users as $id => $user)
                                     <option value="{{ $id }}">{{ $user }}</option>
                                 @endforeach
                             </x-forms.select>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="exampleFormControlFile1">Subir archivo</label>
+                        <input type="file" name="attachment" class="form-control-file @error('attachment') is-invalid @enderror" id="exampleFormControlFile1">
+                        @error('attachment')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
                 <div class="float-right">
-                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save mr-2"></i>Guardar</button>
-                    <button type="button" class="btn btn-default btn-sm" onclick="history.back();"><i class="fas fa-ban mr-2"></i>Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-sm"><i
+                            class="fas fa-save mr-2"></i>Guardar</button>
+                    <button type="button" class="btn btn-default btn-sm" onclick="history.back();"><i
+                            class="fas fa-ban mr-2"></i>Cancelar</button>
                 </div>
             </div>
             <!-- /.card-footer-->

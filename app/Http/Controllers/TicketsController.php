@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SaveCommentRequest;
-use App\Http\Requests\SaveTicketRequest;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\Ticket;
+use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\Activity;
-use App\Models\Comment;
-use App\Models\User;
-use App\Notifications\NewComment;
-use App\Notifications\TicketAssigned;
-use App\Notifications\TicketClosed;
 use Illuminate\Http\Request;
+use App\Notifications\NewComment;
+use App\Notifications\TicketClosed;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\TicketAssigned;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\SaveTicketRequest;
+use App\Http\Requests\SaveCommentRequest;
 
 class TicketsController extends Controller
 {
@@ -40,16 +41,20 @@ class TicketsController extends Controller
 
     public function store(SaveTicketRequest $request)
     {
-        $ticket = Ticket::create($request->validated());
+        $ticket = Ticket::create($request->except('attachment'));
+
+        // Save attachment to disk
+        if ($request->hasFile('attachment')) {
+            $ticket->attachments()->create([
+                'filename' => $request->file('attachment')->getClientOriginalName(),
+                'route' => $request->file('attachment')->store('tickets'),
+            ]);
+        }
 
         $data = [
             'id' => $ticket->id,
             'activity' => $ticket->activity->name,
         ];
-
-        if ($ticket->assigned_to == Auth::id()) {
-            session()->increment('pendingTickets');
-        }
 
         User::findOrFail($ticket->assigned_to)->notify(new TicketAssigned($data));
 
