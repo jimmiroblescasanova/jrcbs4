@@ -1,7 +1,7 @@
 <x-main-layout>
     <x-slot name="header">
         <div class="col-sm-6">
-            <h1>Contactos</h1>
+            <h1><i class="far fa-id-badge mr-2"></i>Contactos</h1>
         </div>
         @can('create contacts')
             <div class="col-sm-6">

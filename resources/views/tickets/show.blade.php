@@ -82,7 +82,7 @@
                     <hr>
 
                     <strong><i class="far fa-comment-alt mr-1 mb-3"></i> Notas</strong>
-                    <p class="text-muted">{{ $ticket->note }}</p>
+                    <p class="text-muted">{!! $ticket->note !!}</p>
                     <hr>
 
                     <strong><i class="fas fa-link mr-1 mb-3"></i> Archivos adjuntos</strong>

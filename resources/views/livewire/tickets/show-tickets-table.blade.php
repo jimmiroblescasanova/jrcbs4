@@ -68,7 +68,7 @@
                             <td>{!! tag_label($ticket->tag) !!}</td>
                             @can('edit tickets')
                                 <td class="text-center">
-                                    <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-default btn-xs"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-primary btn-xs"><i class="fas fa-eye mr-2"></i>Ver</a>
                                 </td>
                             @endcan
                         </tr>

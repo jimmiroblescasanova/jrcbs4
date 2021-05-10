@@ -27,27 +27,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-12 col-md-8">
-                        <x-form-textarea label="Notas" name="note" rows="5" placeholder="Agrega unas notas..." />
-                        <small class="text-muted">Máximo 255 carácteres.</small>
+                    <div class="form-group col-6 col-md-4">
+                        <x-forms.select name="tag_id" class="select2" label="Seleccionar etiqueta">
+                            <option></option>
+                            @foreach ($tags as $id => $tag)
+                                <option value="{{ $id }}">{{ $tag }}</option>
+                            @endforeach
+                        </x-forms.select>
                     </div>
-                    <div class="col-6 col-md-4">
-                        <div class="form-group">
-                            <x-forms.select name="tag_id" class="select2" label="Seleccionar etiqueta">
-                                <option></option>
-                                @foreach ($tags as $id => $tag)
-                                    <option value="{{ $id }}">{{ $tag }}</option>
-                                @endforeach
-                            </x-forms.select>
-                        </div>
-                        <div class="form-group">
-                            <x-forms.select name="assigned_to" class="select2" label="Asignar a">
-                                <option></option>
-                                @foreach ($users as $id => $user)
-                                    <option value="{{ $id }}">{{ $user }}</option>
-                                @endforeach
-                            </x-forms.select>
-                        </div>
+                    <div class="form-group col-6 col-md-4">
+                        <x-forms.select name="assigned_to" class="select2" label="Asignar a">
+                            <option></option>
+                            @foreach ($users as $id => $user)
+                                <option value="{{ $id }}">{{ $user }}</option>
+                            @endforeach
+                        </x-forms.select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12 col-md-12">
+                        <x-form-textarea class="summernote" label="Notas" name="note" placeholder="Agrega unas notas..." />
+                        <small class="text-muted">Máximo 255 carácteres.</small>
                     </div>
                 </div>
                 <div class="row">
@@ -83,7 +83,18 @@
                     allowClear: true
                 });
             });
-
+            $(document).ready(function() {
+                $('.summernote').summernote({
+                    height: 120,
+                    maxHeight: 200,
+                    toolbar: [
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['view', ['codeview', 'help']]
+                    ]
+                });
+            });
         </script>
     </x-slot>
 </x-main-layout>

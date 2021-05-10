@@ -27,7 +27,7 @@ class SaveTicketRequest extends FormRequest
             'contact_id' => ['required', 'exists:contacts,id'],
             'activity_id' => ['required', 'exists:activities,id'],
             'tag_id' => ['required', 'exists:tags,id'],
-            'note' => ['nullable', 'string', 'max:255'],
+            'note' => ['nullable', 'string'],
             'created_by' => ['required', 'exists:users,id'],
             'assigned_to' => ['required', 'exists:users,id'],
             'attachment' => ['file', 'mimes:png,jpg,pdf,xls,xlsx'],
