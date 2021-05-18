@@ -13,7 +13,7 @@
                         <x-forms.select name="contact_id" class="select2" label="Seleccionar un contacto">
                             <option></option>
                             @foreach ($contacts as $contact)
-                                <option value="{{ $contact->id }}">{{ $contact->full_name }}</option>
+                                <option value="{{ $contact->id }}">{{ $contact->full_name }} ({{ Str::limit($contact->company->name ?? '', 15, '...') }})</option>
                             @endforeach
                         </x-forms.select>
                     </div>

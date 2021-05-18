@@ -32,7 +32,7 @@ class TicketsController extends Controller
     public function create()
     {
         return view('tickets.create', [
-            'contacts' => Contact::select('id', 'name', 'lastname')->get(),
+            'contacts' => Contact::all(),
             'tags' => Tag::pluck('name', 'id'),
             'activities' => Activity::pluck('name', 'id'),
             'users' => User::pluck('name', 'id'),
