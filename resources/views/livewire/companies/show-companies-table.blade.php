@@ -44,7 +44,7 @@
                                     <a wire:click="$emit('editModal', {{ $company->id }})"
                                         class="btn btn-default btn-xs mr-2" data-toggle="modal"
                                         data-target="#updateCompanyModal" class="mr-2">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-edit mr-2"></i>Ver
                                     </a>
                                     <a onclick="confirmDeletion({{ $company->id }}, '{{ $company->name }}');"
                                         class="btn btn-danger btn-xs">

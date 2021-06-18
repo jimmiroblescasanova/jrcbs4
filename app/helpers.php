@@ -6,3 +6,8 @@ function tag_label(Tag $tag)
 {
     return "<i class='fas fa-circle' style='color: {$tag->color}'></i> {$tag->name}";
 }
+
+function setActive($route)
+{
+    return request()->routeIs($route) ? 'active' : '';
+}

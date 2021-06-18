@@ -7,15 +7,20 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('groups.store') }}" method="POST">
+            <form action="{{ route('configurations.groups.update', $role) }}" method="POST">
                 @csrf
-                @include('groups._form')
-                <div class="form-group mt-3">
-                    <button type="submit" class="btn btn-primary btn-sm float-right"><i
-                            class="fas fa-check mr-2"></i>Guardar</button>
+                @method('PUT')
+                @include('configurations.groups._form')
+
+                <div class="row mt-3 float-right">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-check mr-2"></i>Guardar</button>
+                    </div>
+                    <div class="form-group ml-3">
+                        <button type="button" onclick="history.back();" class="btn btn-default btn-sm"><i class="fas fa-backward mr-2"></i>Atrás</button>
+                    </div>
                 </div>
             </form>
-
         </div><!-- /.card-body -->
     </div>
 
@@ -61,5 +66,4 @@
             }
         </script>
     </x-slot>
-
 </x-main-layout>

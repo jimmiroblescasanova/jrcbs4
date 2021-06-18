@@ -1,14 +1,18 @@
 <?php
 
+use App\Http\Controllers\ActivitiesController;
+use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ContactsController;
-use App\Http\Controllers\CompaniesController;
-use App\Http\Controllers\ConfigurationsController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\TicketsController;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\ProgramsController;
+use App\Http\Controllers\CompaniesController;
+use App\Http\Livewire\Configurations\Activities;
+use App\Http\Controllers\ConfigurationsController;
 
 Auth::routes();
 
@@ -16,17 +20,26 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Routes for all configurations
 Route::prefix('configurations')->group(function () {
-    Route::get('/', [ConfigurationsController::class, 'index'])->name('configurations.index');
     // Prefix for groups controller
     Route::prefix('groups')->group(function () {
         Route::middleware(['can:create groups'])->group(function () {
-            Route::get('/', [GroupsController::class, 'create'])->name('groups.create');
+            Route::get('/', [GroupsController::class, 'index'])->name('configurations.groups.index');
+            Route::get('/create', [GroupsController::class, 'create'])->name('configurations.groups.create');
             Route::post('/', [GroupsController::class, 'store'])->name('groups.store');
         });
         Route::middleware(['can:edit groups'])->group(function () {
-            Route::get('/{role}/edit', [GroupsController::class, 'edit'])->name('groups.edit');
-            Route::put('/{role}/edit', [GroupsController::class, 'update'])->name('groups.update');
+            Route::get('/{role}/edit', [GroupsController::class, 'edit'])->name('configurations.groups.edit');
+            Route::put('/{role}/edit', [GroupsController::class, 'update'])->name('configurations.groups.update');
+            Route::get('/{role}/delete', [GroupsController::class, 'destroy'])->name('configurations.groups.delete');
         });
+    });
+    Route::prefix('programs')->group(function () {
+        Route::get('/', [ProgramsController::class, 'index'])->name('configurations.programs.index');
+    });
+
+    Route::prefix('activities')->group(function () {
+        Route::get('/', [ActivitiesController::class, 'index'])->name('configurations.activities.index');
+        Route::post('/', [ActivitiesController::class, 'store'])->name('configurations.activities.store');
     });
 });
 

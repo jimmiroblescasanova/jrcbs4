@@ -22,11 +22,21 @@ class Company extends Model
 
     public function setRfcAttribute($rfc)
     {
-        return $this->attributes['rfc'] = Str::upper($rfc);
+        $this->attributes['rfc'] = Str::upper($rfc);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = Str::upper($value);
     }
 
     public function contacts()
     {
         return $this->hasMany(Contact::class);
+    }
+
+    public function programs()
+    {
+        return $this->belongsToMany(Program::class);
     }
 }

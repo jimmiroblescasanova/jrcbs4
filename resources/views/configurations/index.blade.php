@@ -10,7 +10,7 @@
     <div class="row">
         @can('show activities')
             <div class="col-md-6">
-                @livewire('configurations.activities')
+                {{-- @livewire('configurations.activities') --}}
             </div>
         @endcan
         @can('show tags')

@@ -17,6 +17,11 @@ class CompaniesController extends Controller
         return view('companies.index');
     }
 
+    public function edit()
+    {
+        return "hola!";
+    }
+
     public function export()
     {
         return Excel::download(new CompaniesExport, 'empresas-' . NOW()->format('dmY') . '.xlsx');

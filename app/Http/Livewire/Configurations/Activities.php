@@ -79,6 +79,6 @@ class Activities extends Component
     {
         return view('livewire.configurations.activities', [
             'activities' => Activity::simplePaginate(5),
-        ]);
+        ])->extends('layouts.configurations');
     }
 }

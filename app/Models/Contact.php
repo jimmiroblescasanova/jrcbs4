@@ -33,4 +33,14 @@ class Contact extends Model
     {
         return "{$this->attributes['name']} {$this->attributes['lastname']}";
     }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
+
+    public function setLastnameAttribute($value)
+    {
+        $this->attributes['lastname'] = strtoupper($value);
+    }
 }
