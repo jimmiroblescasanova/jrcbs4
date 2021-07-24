@@ -1,18 +1,16 @@
 <?php
 
 use App\Http\Controllers\ActivitiesController;
-use App\Models\Activity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\ProgramsController;
 use App\Http\Controllers\CompaniesController;
-use App\Http\Livewire\Configurations\Activities;
-use App\Http\Controllers\ConfigurationsController;
 
 Auth::routes();
 
@@ -40,6 +38,15 @@ Route::prefix('configurations')->group(function () {
     Route::prefix('activities')->group(function () {
         Route::get('/', [ActivitiesController::class, 'index'])->name('configurations.activities.index');
         Route::post('/', [ActivitiesController::class, 'store'])->name('configurations.activities.store');
+        Route::put('/', [ActivitiesController::class, 'update'])->name('configurations.activities.update');
+        Route::delete('/', [ActivitiesController::class, 'destroy'])->name('configurations.activities.destroy');
+    });
+
+    Route::prefix('tags')->group(function () {
+        Route::get('/', [TagsController::class, 'index'])->name('configurations.tags.index');
+        Route::post('/', [TagsController::class, 'store'])->name('configurations.tags.store');
+        Route::put('/', [TagsController::class, 'update'])->name('configurations.tags.update');
+        Route::delete('/', [TagsController::class, 'destroy'])->name('configurations.tags.destroy');
     });
 });
 

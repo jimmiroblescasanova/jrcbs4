@@ -75,7 +75,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{ route('configurations.tags.index') }}" class="nav-link">
                                             <i class="fas fa-tags mr-2"></i>Etiquetas
                                         </a>
                                     </li>

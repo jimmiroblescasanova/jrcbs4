@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreActivityRequest;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 
@@ -10,73 +11,33 @@ class ActivitiesController extends Controller
     public function index()
     {
         return view('configurations.activities.index', [
-            'activities' => Activity::paginate(),
+            'activities' => Activity::all(),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreActivityRequest $request)
     {
-        //
+        Activity::create($request->validated());
+
+        return redirect()->route('configurations.activities.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        return $request;
+        Activity::findOrFail($request['id'])->update([
+            'name' => $request['name'],
+        ]);
+
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function destroy()
     {
-        //
-    }
+        if (request()->ajax())
+        {
+            $result = Activity::findOrFail(request()->input('id'))->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            return response()->json(['response'=>$result]);
+        }
     }
 }

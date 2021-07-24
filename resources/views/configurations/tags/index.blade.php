@@ -3,56 +3,58 @@
 @section('content')
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="card-title"><i class="fas fa-clipboard-list mr-2"></i>Tabla de actividades</h3>
-            {{--<div class="card-tools">
-                {{ $activities->links() }}
-            </div>--}}
+            <h3 class="card-title"><i class="fas fa-clipboard-list mr-2"></i>Tabla de etiquetas</h3>
         </div>
         <div class="card-body p-0">
             <table class="table table-sm">
                 <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        @can('edit activities') <th style="width: 15%;">Acción</th> @endcan
-                    </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <th class="text-center">Color</th>
+                    @can('edit tags') <th style="width: 15%;">Acción</th> @endcan
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach ($activities as $row => $activity)
+                    @forelse($tags as $row => $tag)
                         <tr>
-                            <td scope="row">{{ $activity->name }}</td>
-                            @can('edit activities')
-                                <td class="text-center">
-                                    <a href="#" onclick="editActivity('{{ $activity->id }}', '{{ $activity->name }}');" class="edit mr-2"><i class="fas fa-edit"></i></a>
-                                    <a href="#" onclick="deleteActivity('{{ $activity->id }}', '{{ $row+1 }}');"><i class="fas fa-trash-alt" style="color:red;"></i></a>
-                                </td>
-                            @endcan
+                            <td>{{ $tag->name }}</td>
+                            <td class="text-center"><i class="fas fa-circle" style="color: {{ $tag->color }}"></i>
+                            <td>
+                                <a href="#" onclick="editTag('{{ $tag->id }}', '{{ $tag->name }}', '{{ $tag->color }}')" class="mr-2"><i class="fas fa-edit"></i></a>
+                                <a href="#" onclick="deleteTag('{{ $tag->id }}', '{{ $row+1 }}')"><i class="fas fa-trash-alt" style="color:red;"></i></a>
+                            </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr><td colspan="2">Listado vacío</td></tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-        @can('create activities')
+        @can('create tags')
             <div class="card-footer clearfix">
-                <button data-toggle="modal" data-target="#activitiesModal" type="button" class="btn btn-primary btn-sm float-right"><i
+                <button data-toggle="modal" data-target="#createTagsModal" type="button" class="btn btn-primary btn-sm float-right"><i
                         class="fas fa-pencil-alt mr-2"></i>Nuevo</button>
             </div>
         @endcan
     </div>
-    @can('create activities')
-        <div class="modal fade" id="activitiesModal" tabindex="-1" role="dialog" aria-hidden="true">
+    @can('create tags')
+        <div class="modal fade" id="createTagsModal" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Agregar actividad</h4>
+                        <h4 class="modal-title">Agregar etiqueta</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <form action="{{ route('configurations.activities.store') }}" role="form" method="POST">
+                    <form action="{{ route('configurations.tags.store') }}" method="POST" role="form">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <x-forms.input name="name">Nombre de la actividad</x-forms.input>
+                                <x-forms.input name="name">Nombre de la etiqueta</x-forms.input>
+                            </div>
+                            <div class="form-group">
+                                <x-forms.input type="color" name="color">Color</x-forms.input>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -66,25 +68,28 @@
             <!-- /.modal-dialog -->
         </div>
     @endcan
-
-    @can('edit activities')
-        <div class="modal fade" id="editActivitiesModal" tabindex="-1" role="dialog" aria-hidden="true">
+    @can('edit tags')
+        <div class="modal fade" id="editTagsModal" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Agregar actividad</h4>
+                        <h4 class="modal-title">Editar etiqueta</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <form action="{{ route('configurations.activities.update') }}" role="form" method="POST">
-                        @method('PUT')
+                    <form action="{{ route('configurations.tags.update') }}" method="POST" role="form">
                         @csrf
-                        <input type="hidden" name="id" id="edit-activity-id" value="">
+                        @method('PUT')
+                        <input type="hidden" name="id" id="edit-tag-id" value="">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="edit-activity-name">Nuevo nombre</label>
-                                <input type="text" class="form-control" name="name" id="edit-activity-name" value="">
+                                <label for="edit-tag-name">Nuevo nombre</label>
+                                <input type="text" class="form-control" name="name" id="edit-tag-name" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-tag-color">Nuevo color</label>
+                                <input type="color" class="form-control" name="color" id="edit-tag-color" value="">
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -102,17 +107,11 @@
 
 @section('myScripts')
     <script>
-        $(document).ready(function() {
-            if(window.location.href.indexOf('#activitiesModal') !== -1) {
-                $('#activitiesModal').modal('show');
-            }
-        });
-
-        function deleteActivity(id, row) {
+        function deleteTag(id, row) {
             if (confirm('Deseas eliminar el registro')){
                 $.ajax({
                     headers: {'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
-                    url:'{{ route('configurations.activities.destroy') }}',
+                    url:'{{ route('configurations.tags.destroy') }}',
                     data:{'_method':'delete', 'id':id},
                     type:'post',
                     success: function (data) {
@@ -126,11 +125,12 @@
             }
         }
 
-        function editActivity(id, name)
+        function editTag(id, name, color)
         {
-            $('#editActivitiesModal').modal('show');
-            $('#edit-activity-id').val(id);
-            $('#edit-activity-name').val(name);
+            $('#editTagsModal').modal('show');
+            $('#edit-tag-id').val(id);
+            $('#edit-tag-name').val(name);
+            $('#edit-tag-color').val(color);
         }
     </script>
 @stop
