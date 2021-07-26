@@ -11,3 +11,13 @@ function setActive($route)
 {
     return request()->routeIs($route) ? 'active' : '';
 }
+
+function isProgramAnnual($type)
+{
+    if ($type==true)
+    {
+        return "Anual";
+    } else {
+        return "Tradicional";
+    }
+}

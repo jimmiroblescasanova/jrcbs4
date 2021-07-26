@@ -9,6 +9,10 @@ class Program extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'annual_license',
+    ];
 
     public function companies()
     {

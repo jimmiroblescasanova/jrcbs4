@@ -33,6 +33,11 @@ Route::prefix('configurations')->group(function () {
     });
     Route::prefix('programs')->group(function () {
         Route::get('/', [ProgramsController::class, 'index'])->name('configurations.programs.index');
+        Route::get('/create', [ProgramsController::class, 'create'])->name('configurations.programs.create');
+        Route::post('/create', [ProgramsController::class, 'store'])->name('configurations.programs.store');
+        Route::get('/{program}/edit', [ProgramsController::class, 'edit'])->name('configurations.programs.edit');
+        Route::put('/{program}/edit', [ProgramsController::class, 'update'])->name('configurations.programs.update');
+        Route::delete('/', [ProgramsController::class, 'destroy'])->name('configurations.programs.destroy');
     });
 
     Route::prefix('activities')->group(function () {
