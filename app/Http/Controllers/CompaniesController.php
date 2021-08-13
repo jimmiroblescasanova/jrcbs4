@@ -29,6 +29,7 @@ class CompaniesController extends Controller
         $company = Company::create([
             'name' => $request->name,
             'rfc' => $request->rfc,
+            'tradename' => $request->tradename,
         ]);
 
         foreach($request->programs as $program)
@@ -36,7 +37,7 @@ class CompaniesController extends Controller
             $company->programs()->attach($program);
         }
 
-        return $request;
+        return redirect()->route('companies.show', $company)->with('success', 'Empresa creada correctamente');
     }
 
     public function show(Company $company)

@@ -19,6 +19,9 @@
                 <x-forms.input type="text" name="rfc">RFC:</x-forms.input>
             </div>
             <div class="form-group">
+                <x-forms.input type="text" name="tradename">Nombre comercial:</x-forms.input>
+            </div>
+            <div class="form-group">
                 <p><strong>Sistemas CONTPAQi de la empresa:</strong></p>
                 @foreach($programs as $i => $program)
                     <div class="form-check form-check-inline">

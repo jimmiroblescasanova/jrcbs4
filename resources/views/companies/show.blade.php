@@ -33,6 +33,9 @@
                             <label for="rfc">R.F.C.</label>
                             <input type="text" class="form-control" name="rfc" id="rfc" value="{{ $company->rfc }}">
                         </div>
+                        <div class="form-group">
+                            <x-forms.input type="text" name="tradename" :value="$company->tradename">Nombre comercial:</x-forms.input>
+                        </div>
                         <small class="text-black-50">Última actualización: {{ $company->updated_at->diffForHumans() }}</small>
                     </div>
                     <div class="card-footer">
