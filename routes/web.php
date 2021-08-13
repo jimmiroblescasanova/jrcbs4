@@ -31,7 +31,7 @@ Route::prefix('configurations')->group(function () {
         Route::middleware(['can:edit groups'])->group(function () {
             Route::get('/{role}/edit', [GroupsController::class, 'edit'])->name('configurations.groups.edit');
             Route::put('/{role}/edit', [GroupsController::class, 'update'])->name('configurations.groups.update');
-            Route::get('/{role}/delete', [GroupsController::class, 'destroy'])->name('configurations.groups.delete');
+            Route::delete('/', [GroupsController::class, 'destroy'])->name('configurations.groups.delete');
         });
     });
     Route::prefix('programs')->group(function () {
@@ -40,21 +40,21 @@ Route::prefix('configurations')->group(function () {
         Route::post('/create', [ProgramsController::class, 'store'])->name('configurations.programs.store');
         Route::get('/{program}/edit', [ProgramsController::class, 'edit'])->name('configurations.programs.edit');
         Route::put('/{program}/edit', [ProgramsController::class, 'update'])->name('configurations.programs.update');
-        Route::delete('/', [ProgramsController::class, 'destroy'])->name('configurations.programs.destroy');
+        Route::delete('/', [ProgramsController::class, 'destroy'])->name('configurations.programs.delete');
     });
 
     Route::prefix('activities')->group(function () {
         Route::get('/', [ActivitiesController::class, 'index'])->name('configurations.activities.index');
         Route::post('/', [ActivitiesController::class, 'store'])->name('configurations.activities.store');
         Route::put('/', [ActivitiesController::class, 'update'])->name('configurations.activities.update');
-        Route::delete('/', [ActivitiesController::class, 'destroy'])->name('configurations.activities.destroy');
+        Route::delete('/', [ActivitiesController::class, 'destroy'])->name('configurations.activities.delete');
     });
 
     Route::prefix('tags')->group(function () {
         Route::get('/', [TagsController::class, 'index'])->name('configurations.tags.index');
         Route::post('/', [TagsController::class, 'store'])->name('configurations.tags.store');
         Route::put('/', [TagsController::class, 'update'])->name('configurations.tags.update');
-        Route::delete('/', [TagsController::class, 'destroy'])->name('configurations.tags.destroy');
+        Route::delete('/', [TagsController::class, 'destroy'])->name('configurations.tags.delete');
     });
 });
 

@@ -1,13 +1,9 @@
 @extends('layouts.configurations')
 
 @section('content')
-    @if (session()->has('message'))
-        <x-partials.alert type="success" icon="fas fa-check" :message="session('message')" />
-    @endif
-
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title"><i class="fas fa-user-cog mr-2"></i>Configuraciones del host</h3>
+        <div class="card-header border-0">
+            <h3 class="card-title"><i class="fas fa-key mr-2"></i>Configuraciones del host</h3>
         </div>
         <form action="{{ route('configurations.hosts.update') }}" method="POST" role="form">
             @csrf

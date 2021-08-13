@@ -10,7 +10,7 @@ class TagsController extends Controller
     public function index()
     {
         return view('configurations.tags.index', [
-            'tags' => Tag::all(),
+            'tags' => Tag::orderBy('name')->paginate(5),
         ]);
     }
 
@@ -39,6 +39,10 @@ class TagsController extends Controller
         if (request()->ajax())
         {
             $result = Tag::findOrFail(request()->input('id'))->delete();
+
+            if (!$result){
+                return response()->json(['response'=>$result], 500);
+            }
 
             return response()->json(['response'=>$result]);
         }

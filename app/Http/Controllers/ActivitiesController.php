@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreActivityRequest;
 use App\Models\Activity;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class ActivitiesController extends Controller
@@ -11,7 +12,7 @@ class ActivitiesController extends Controller
     public function index()
     {
         return view('configurations.activities.index', [
-            'activities' => Activity::all(),
+            'activities' => Activity::orderBy('name')->paginate(5),
         ]);
     }
 
@@ -37,8 +38,15 @@ class ActivitiesController extends Controller
         {
             $result = Activity::findOrFail(request()->input('id'))->delete();
 
-            session()->flash('cant-delete', 'El perfil tiene modelos asociados, no se puede eliminar.');
-            return response()->json(['response'=>$result]);
+            if (!$result) {
+                return response()->json([
+                    'response' => $result
+                ], 500);
+            }
+
+            return response()->json([
+                'response' => $result
+            ]);
         }
     }
 }

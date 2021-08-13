@@ -16,7 +16,7 @@ class GroupsController extends Controller
     public function index()
     {
         return view('configurations.groups.index', [
-            'roles' => Role::all(),
+            'roles' => Role::where('id', '>', 1)->orderBy('name')->paginate(5),
         ]);
     }
 
@@ -63,18 +63,26 @@ class GroupsController extends Controller
         return redirect()->route('configurations.groups.index');
     }
 
-    public function destroy($role)
+    public function destroy()
     {
+        $role = request()->input('name');
 
-        $users = User::role($role)->get();
-
-        if (count($users)>0)
+        if (request()->json())
         {
-            session()->flash('cant-delete', 'El perfil tiene modelos asociados, no se puede eliminar.');
-            return redirect()->back();
-        } else {
+            $users = User::role($role)->get();
+
+            if (count($users)>0)
+            {
+                return response()->json([
+                    'response' => 'Error'
+                ], 500);
+            }
+
             Role::findByName($role)->delete();
-            return redirect()->back();
+
+            return response()->json([
+                'response' => 'Eliminado'
+            ]);
         }
 
     }

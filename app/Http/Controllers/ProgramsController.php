@@ -15,7 +15,7 @@ class ProgramsController extends Controller
     public function index()
     {
         return view('configurations.programs.index', [
-            'programs' => Program::all(),
+            'programs' => Program::paginate(5),
         ]);
     }
 
@@ -58,6 +58,10 @@ class ProgramsController extends Controller
         if (request()->ajax())
         {
             $result = Program::findOrFail(request()->input('id'))->delete();
+
+            if (!$result) {
+                return response()->json(['response'=>$result], 500);
+            }
 
             return response()->json(['response'=>$result]);
         }

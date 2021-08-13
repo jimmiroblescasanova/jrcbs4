@@ -63,7 +63,7 @@
                                 <ul class="nav nav-pills flex-column">
                                     <li class="nav-item">
                                         <a href="{{ route('configurations.index') }}" class="nav-link {{ setActive('configurations.index') }}">
-                                            <i class="fas fa-user-lock mr-2"></i>Hosts
+                                            <i class="fas fa-key mr-2"></i>Hosts
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -83,7 +83,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('configurations.programs.index') }}" class="nav-link {{ setActive('configurations.programs.*') }}">
-                                            <i class="fas fa-hdd"></i> Programas
+                                            <i class="fas fa-hdd mr-2"></i>Programas
                                         </a>
                                     </li>
                                 </ul>
@@ -92,6 +92,10 @@
                         </div>
                     </div>
                     <div class="col-md-9">
+                        @if (session()->has('success'))
+                            <x-partials.alert type="success" icon="fas fa-check" :message="session('message')" />
+                        @endif
+
                         @yield('content')
                     </div>
                 </div>

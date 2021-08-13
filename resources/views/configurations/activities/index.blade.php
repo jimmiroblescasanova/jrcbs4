@@ -4,12 +4,12 @@
     <div class="card">
         <div class="card-header border-0">
             <h3 class="card-title"><i class="fas fa-clipboard-list mr-2"></i>Tabla de actividades</h3>
-            {{--<div class="card-tools">
-                {{ $activities->links() }}
-            </div>--}}
+            <div class="card-tools">
+                {{ $activities->links('vendor.pagination.bootstrap-4-sm') }}
+            </div>
         </div>
         <div class="card-body p-0">
-            <table class="table table-sm">
+            <table class="table table-sm table-striped">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -108,22 +108,39 @@
             }
         });
 
-        function deleteActivity(id, row) {
-            if (confirm('Deseas eliminar el registro')){
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
-                    url:'{{ route('configurations.activities.destroy') }}',
-                    data:{'_method':'delete', 'id':id},
-                    type:'post',
-                    success: function (data) {
-                        console.log(data.response);
-                        if (data.response)
-                        {
+        function deleteActivity(id, row){
+            Swal.fire({
+                icon: 'warning',
+                text: '¿Estas seguro de querer eliminar la fila #'+row+'?',
+                showCancelButton: true,
+                confirmButtonText: 'Eliminar',
+                confirmButtonColor: '#e3342f',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+                        url:'{{ route('configurations.activities.delete') }}',
+                        data:{'_method':'delete', 'id':id},
+                        type:'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data.response);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Eliminado',
+                            });
                             $('tr').eq(row).hide('slow', function(){ $('tr').eq(row).remove(); });
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'No se puede eliminar si tiene registros asociados',
+                            });
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         }
     </script>
 @stop
