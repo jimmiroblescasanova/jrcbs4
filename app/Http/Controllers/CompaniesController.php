@@ -44,7 +44,7 @@ class CompaniesController extends Controller
     {
         return view('companies.show', [
             'company' => $company,
-            'programs' => Program::all(),
+            'programs' => Program::orderBy('name')->get(),
         ]);
     }
 
@@ -53,9 +53,10 @@ class CompaniesController extends Controller
         $company->update([
             'name' => $request->name,
             'rfc' => $request->rfc,
+            'tradename' => $request->tradename,
         ]);
 
-        return redirect()->route('companies.show', $company);
+        return redirect()->route('companies.show', $company)->with('success', 'Los datos se han actualizado con éxito');
     }
 
     public function sync(Company $company, Request $request)

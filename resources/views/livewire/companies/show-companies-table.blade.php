@@ -2,7 +2,7 @@
     <div class="row">
         <div class="form-group col-12 col-md-10">
             <input type="text" wire:model.debounce.500ms='search' class="form-control border-0 shadow-sm"
-                placeholder="Buscar por nombre, RFC" />
+                placeholder="Buscar por Nombre, RFC, Nombre comercial" />
         </div>
         <div class="form-group col-12 col-md-2">
             <select class="form-control border-0 shadow-sm" wire:model='perPage'>
@@ -21,10 +21,11 @@
                         <x-tables.table-heading sortable wire:click="sortBy('id')"
                             :direction="$sortField === 'id' ? $sortDirection : null">ID</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('name')"
-                            :direction="$sortField === 'name' ? $sortDirection : null">Nombre de la empresa
-                        </x-tables.table-heading>
+                            :direction="$sortField === 'name' ? $sortDirection : null">Nombre de la empresa</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('rfc')"
                             :direction="$sortField === 'rfc' ? $sortDirection : null">R.F.C.</x-tables.table-heading>
+                        <x-tables.table-heading sortable wire:click="sortBy('tradename')"
+                            :direction="$sortField === 'tradename' ? $sortDirection : null">Nombre comercial</x-tables.table-heading>
                         @can('edit companies')
                             <th style="width: 10%;">Opciones</th>
                         @endcan
@@ -36,6 +37,7 @@
                             <td scope="row">{{ $company->id }}</td>
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->rfc }}</td>
+                            <td>{{ $company->tradename }}</td>
                             @can('edit companies')
                                 <td class="text-center">
                                     <a href="{{ route('companies.show', $company) }}" class="btn btn-default btn-xs mr-2">
@@ -46,7 +48,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4">No existen registros.</td>
+                            <td colspan="5">No existen registros.</td>
                         </tr>
                     @endforelse
                 </tbody>

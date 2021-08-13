@@ -17,7 +17,8 @@ class Company extends Model
         return empty($search) ? static::query()
             : static::query()->where('id', 'LIKE', '%' . $search . '%')
             ->orWhere('name', 'LIKE', '%' . $search . '%')
-            ->orWhere('rfc', 'LIKE', '%' . $search . '%');
+            ->orWhere('rfc', 'LIKE', '%' . $search . '%')
+            ->orWhere('tradename', 'LIKE', '%' . $search . '%');
     }
 
     public static function report($show)
