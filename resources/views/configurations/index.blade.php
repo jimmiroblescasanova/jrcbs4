@@ -1,98 +1,45 @@
-<x-main-layout>
-    <x-slot name="header">
-        <h1>Configuraciones del sistema</h1>
-    </x-slot>
+@extends('layouts.configurations')
 
-    @if (session()->has('edit-role'))
-        <x-partials.alert type="danger" :message="session('edit-role')" icon="fas fa-ban" />
+@section('content')
+    @if (session()->has('message'))
+        <x-partials.alert type="success" icon="fas fa-check" :message="session('message')" />
     @endif
 
-    <div class="row">
-        @can('show activities')
-            <div class="col-md-6">
-                {{-- @livewire('configurations.activities') --}}
-            </div>
-        @endcan
-        @can('show tags')
-            <div class="col-md-6">
-                @livewire('configurations.tags')
-            </div>
-        @endcan
-    </div>
-
-    <div class="row">
-        @can('show groups')
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fas fa-user-lock mr-2"></i>Grupos
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-user-cog mr-2"></i>Configuraciones del host</h3>
+        </div>
+        <form action="{{ route('configurations.hosts.update') }}" method="POST" role="form">
+            @csrf
+            @method('PATCH')
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-12 col-md-8">
+                        <x-forms.input type="text" name="sql_host" :value="$data['sql_host']">URL del hostname</x-forms.input>
                     </div>
-                    <div class="card-body p-0">
-                        <table class="table table-sm table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    @can('edit groups') <th style="width: 15%;">Accion</th> @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($roles as $role)
-                                    <tr>
-                                        <td>{{ $role }}</td>
-                                        @can('edit groups')
-                                            <td>
-                                                <a href="{{ route('groups.edit', $role) }}"><i class="fas fa-eye"></i></a>
-                                            </td>
-                                        @endcan
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <div class="form-group col-12 col-md-4">
+                        <x-forms.input type="number" name="sql_port" :value="$data['sql_port']">Puerto del hostname</x-forms.input>
                     </div>
-                    @can('create groups')
-                        <div class="card-footer">
-                            <a href="{{ route('groups.create') }}" class="btn btn-primary btn-sm float-right"><i
-                                    class="fas fa-pencil-alt mr-2"></i>Nuevo</a>
-                        </div>
-                    @endcan
+                </div>
+                <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        <x-forms.input type="text" name="sql_bdd_name" :value="$data['sql_bdd_name']">Nombre de la base de datos</x-forms.input>
+                    </div>
+                    <div class="form-group col-12 col-md-3">
+                        <x-forms.input type="text" name="sql_user" :value="$data['sql_user']">Usuario SQL Server</x-forms.input>
+                    </div>
+                    <div class="form-group col-12 col-md-3">
+                        <x-forms.input type="text" name="sql_pswd" :value="$data['sql_pswd']">Contraseña SQL Server</x-forms.input>
+                    </div>
                 </div>
             </div>
-        @endcan
-        <div class="col-6"></div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                <div class="float-right">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit mr-2"></i>Actualizar datos</button>
+                </div>
+            </div>
+        </form>
+        <!-- /.card-footer-->
     </div>
-
-    @can('edit hosts')
-        @livewire('configurations.change-hosts')
-    @endcan
-
-    <x-slot name="custom_scripts">
-        <script>
-            window.livewire.on('hideModalTrigger', () => {
-                $('.modal').modal('hide');
-            });
-
-            window.livewire.on('addTagModal', () => {
-                $('#modal-tags').modal('show');
-            });
-
-            window.livewire.on('addOrUpdateModal', () => {
-                $('#activitiesModal').modal('show');
-            });
-
-            function deleteRow(id, name, modelName) {
-                swal({
-                        title: "Confirmación",
-                        text: "Estas a punto de eliminar el registro: " + name + ", ¿Continuar?",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            Livewire.emit(modelName, id);
-                        }
-                    });
-            }
-        </script>
-    </x-slot>
-</x-main-layout>
+@stop

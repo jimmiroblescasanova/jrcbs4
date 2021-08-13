@@ -66,7 +66,7 @@
                         <x-partials.sidebar-nav-link :route="route('users.index')" :active="request()->routeIs('users.*')" class="fas fa-users" title="Usuarios" />
                     @endcan
                     @canany(['show activities', 'show tags', 'show groups', 'edit hosts'])
-                        <x-partials.sidebar-nav-link :route="route('configurations.groups.index')" :active="request()->routeIs('configurations.*')" class="fas fa-cog" title="Configuraciones" />
+                        <x-partials.sidebar-nav-link :route="route('configurations.index')" :active="request()->routeIs('configurations.*')" class="fas fa-cog" title="Configuraciones" />
                     @endcanany
                 @endcanany
 

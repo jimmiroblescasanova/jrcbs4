@@ -65,7 +65,6 @@ class GroupsController extends Controller
 
     public function destroy($role)
     {
-//        $role_to_delete = Role::findByName($role);
 
         $users = User::role($role)->get();
 

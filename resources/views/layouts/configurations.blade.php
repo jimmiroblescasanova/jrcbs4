@@ -47,9 +47,6 @@
 
             <!-- Main content -->
             <section class="content">
-                @if (session()->has('cant-delete'))
-                    <x-partials.alert type="warning" :message="session('cant-delete')" icon="fas fa-ban"></x-partials.alert>
-                @endif
                 <div class="row">
                     <div class="col-md-3">
                         <div class="card">
@@ -65,6 +62,11 @@
                             <div class="card-body p-0">
                                 <ul class="nav nav-pills flex-column">
                                     <li class="nav-item">
+                                        <a href="{{ route('configurations.index') }}" class="nav-link {{ setActive('configurations.index') }}">
+                                            <i class="fas fa-user-lock mr-2"></i>Hosts
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="{{ route('configurations.groups.index') }}" class="nav-link {{ setActive('configurations.groups.*') }}">
                                             <i class="fas fa-user-lock mr-2"></i>Grupos
                                         </a>
@@ -75,7 +77,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('configurations.tags.index') }}" class="nav-link">
+                                        <a href="{{ route('configurations.tags.index') }}" class="nav-link {{ setActive('configurations.tags.*') }}">
                                             <i class="fas fa-tags mr-2"></i>Etiquetas
                                         </a>
                                     </li>

@@ -125,12 +125,5 @@
                 });
             }
         }
-
-        function editActivity(id, name)
-        {
-            $('#editActivitiesModal').modal('show');
-            $('#edit-activity-id').val(id);
-            $('#edit-activity-name').val(name);
-        }
     </script>
 @stop

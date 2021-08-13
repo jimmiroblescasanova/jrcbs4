@@ -7,7 +7,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('groups.store') }}" method="POST">
+            <form action="{{ route('configurations.groups.store') }}" method="POST">
                 @csrf
                 @include('configurations.groups._form')
                 <div class="form-group mt-3">

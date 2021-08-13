@@ -16,19 +16,9 @@ class ShowCompaniesTable extends Component
     public $sortField = 'id';
     public $sortDirection = 'desc';
 
-    protected $listeners = [
-        'companyAddedOrUpdated',
-        'deleteCompany',
-    ];
-
     protected $queryString = [
         'search' => ['except' => ''],
     ];
-
-    public function companyAddedOrUpdated()
-    {
-        session()->flash('message', 'Registro guardado de forma exitosa.');
-    }
 
     public function sortBy($column)
     {
@@ -48,24 +38,6 @@ class ShowCompaniesTable extends Component
     public function updatedperPage()
     {
         $this->resetPage();
-    }
-
-    public function deleteCompany(Company $company)
-    {
-        if ($company->contacts()->exists()) {
-            $this->emit('LiveAlert', [
-                'icon' => 'error',
-                'title' => 'Error al eliminar',
-                'message' => 'No se puede eliminar si tiene contactos asociados.'
-            ]);
-        } else {
-            $company->delete();
-            $this->emit('LiveAlert', [
-                'icon' => 'success',
-                'title' => 'Eliminado',
-                'message' => 'La empresa ha sido eliminada correctamente.'
-            ]);
-        }
     }
 
     public function render()

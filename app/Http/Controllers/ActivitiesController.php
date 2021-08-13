@@ -37,6 +37,7 @@ class ActivitiesController extends Controller
         {
             $result = Activity::findOrFail(request()->input('id'))->delete();
 
+            session()->flash('cant-delete', 'El perfil tiene modelos asociados, no se puede eliminar.');
             return response()->json(['response'=>$result]);
         }
     }
