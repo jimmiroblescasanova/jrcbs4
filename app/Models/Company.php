@@ -20,6 +20,18 @@ class Company extends Model
             ->orWhere('rfc', 'LIKE', '%' . $search . '%');
     }
 
+    public static function report($show)
+    {
+        switch ($show) {
+            case 1:
+                return static::query()->doesntHave('contacts');
+            case 2:
+                return static::query()->has('contacts')->with('contacts');
+            default:
+                return static::query();
+        }
+    }
+
     public function setRfcAttribute($rfc)
     {
         $this->attributes['rfc'] = Str::upper($rfc);

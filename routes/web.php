@@ -59,6 +59,12 @@ Route::prefix('configurations')->group(function () {
 Route::get('/companies', [CompaniesController::class, 'index'])
     ->middleware('can:show companies')
     ->name('companies.index');
+Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
+Route::get('/companies/{company}/show', [CompaniesController::class, 'show'])->name('companies.show');
+Route::patch('/companies/{company}/show', [CompaniesController::class, 'update'])->name('companies.update');
+Route::delete('/companies/{company}/show', [CompaniesController::class, 'destroy'])->name('companies.destroy');
+Route::post('/companies/{company}/sync', [CompaniesController::class, 'sync'])->name('companies.sync');
+Route::post('/companies/report', [CompaniesController::class, 'report'])->name('companies.report');
 Route::get('/companies/export', [CompaniesController::class, 'export'])->name('companies.export');
 
 // Routes for contacts controller

@@ -1,7 +1,4 @@
 <div>
-    @if (session()->has('message'))
-        <x-partials.alert icon="fas fa-check" :message="session('message')" />
-    @endif
     <div class="row">
         <div class="form-group col-12 col-md-10">
             <input type="text" wire:model.debounce.500ms='search' class="form-control border-0 shadow-sm"
@@ -41,14 +38,8 @@
                             <td>{{ $company->rfc }}</td>
                             @can('edit companies')
                                 <td class="text-center">
-                                    <a wire:click="$emit('editModal', {{ $company->id }})"
-                                        class="btn btn-default btn-xs mr-2" data-toggle="modal"
-                                        data-target="#updateCompanyModal" class="mr-2">
+                                    <a href="{{ route('companies.show', $company) }}" class="btn btn-default btn-xs mr-2">
                                         <i class="fas fa-edit mr-2"></i>Ver
-                                    </a>
-                                    <a onclick="confirmDeletion({{ $company->id }}, '{{ $company->name }}');"
-                                        class="btn btn-danger btn-xs">
-                                        <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </td>
                             @endcan
