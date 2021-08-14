@@ -46,7 +46,7 @@ Route::prefix('configurations')->group(function () {
     Route::prefix('activities')->group(function () {
         Route::get('/', [ActivitiesController::class, 'index'])->name('configurations.activities.index');
         Route::post('/', [ActivitiesController::class, 'store'])->name('configurations.activities.store');
-        Route::put('/', [ActivitiesController::class, 'update'])->name('configurations.activities.update');
+        Route::patch('/', [ActivitiesController::class, 'update'])->name('configurations.activities.update');
         Route::delete('/', [ActivitiesController::class, 'destroy'])->name('configurations.activities.delete');
     });
 

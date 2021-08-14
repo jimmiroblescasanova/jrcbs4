@@ -48,6 +48,7 @@
                 icon: 'warning',
                 text: '¿Estas seguro de querer eliminar la fila #'+row+'?',
                 showCancelButton: true,
+                cancelButtonText: 'No, cancelar!',
                 confirmButtonText: 'Eliminar',
                 confirmButtonColor: '#e3342f',
             }).then((result) => {

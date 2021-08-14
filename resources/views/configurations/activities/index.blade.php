@@ -19,10 +19,10 @@
                 <tbody>
                     @foreach ($activities as $row => $activity)
                         <tr>
-                            <td scope="row">{{ $activity->name }}</td>
+                            <td id="row-{{ $activity->id }}">{{ $activity->name }}</td>
                             @can('edit activities')
                                 <td class="text-center">
-                                    <a href="#" onclick="editActivity('{{ $activity->id }}', '{{ $activity->name }}');" class="edit mr-2"><i class="fas fa-edit"></i></a>
+                                    <a href="#" onclick="editActivity('{{ $activity->name }}', '{{ $activity->id }}');" class="edit mr-2"><i class="fas fa-edit"></i></a>
                                     <a href="#" onclick="deleteActivity('{{ $activity->id }}', '{{ $row+1 }}');"><i class="fas fa-trash-alt" style="color:red;"></i></a>
                                 </td>
                             @endcan
@@ -33,13 +33,13 @@
         </div>
         @can('create activities')
             <div class="card-footer clearfix">
-                <button data-toggle="modal" data-target="#activitiesModal" type="button" class="btn btn-primary btn-sm float-right"><i
-                        class="fas fa-pencil-alt mr-2"></i>Nuevo</button>
+                <button data-toggle="modal" data-target="#createActivitiesModal" type="button" class="btn btn-primary btn-sm float-right">
+                    <i class="fas fa-pencil-alt mr-2"></i>Nuevo</button>
             </div>
         @endcan
     </div>
     @can('create activities')
-        <div class="modal fade" id="activitiesModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="createActivitiesModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -66,47 +66,42 @@
             <!-- /.modal-dialog -->
         </div>
     @endcan
-
-    @can('edit activities')
-        <div class="modal fade" id="editActivitiesModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Agregar actividad</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <form action="{{ route('configurations.activities.update') }}" role="form" method="POST">
-                        @method('PUT')
-                        @csrf
-                        <input type="hidden" name="id" id="edit-activity-id" value="">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="edit-activity-name">Nuevo nombre</label>
-                                <input type="text" class="form-control" name="name" id="edit-activity-name" value="">
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-    @endcan
 @stop
 
 @section('myScripts')
     <script>
-        $(document).ready(function() {
-            if(window.location.href.indexOf('#activitiesModal') !== -1) {
-                $('#activitiesModal').modal('show');
+        async function editActivity(data, id) {
+            const { value: activityName } = await Swal.fire({
+                title: 'Nombre de la actividad',
+                input: 'text',
+                inputValue: data,
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+            });
+            if (activityName) {
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+                    url:'{{ route('configurations.activities.update') }}',
+                    data:{'_method':'patch', 'id':id, 'name':activityName},
+                    type:'post',
+                    dataType: 'json',
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Actualizado correctamente',
+                        });
+                        $('#row-'+id).text(activityName);
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'No se puede eliminar si tiene registros asociados',
+                        });
+                    }
+                });
             }
-        });
+        }
 
         function deleteActivity(id, row){
             Swal.fire({
@@ -114,6 +109,7 @@
                 text: '¿Estas seguro de querer eliminar la fila #'+row+'?',
                 showCancelButton: true,
                 confirmButtonText: 'Eliminar',
+                cancelButtonText: 'No, cancelar!',
                 confirmButtonColor: '#e3342f',
             }).then((result) => {
                 if (result.isConfirmed) {

@@ -23,13 +23,23 @@ class ActivitiesController extends Controller
         return redirect()->route('configurations.activities.index');
     }
 
-    public function update(Request $request)
+    public function update()
     {
-        Activity::findOrFail($request['id'])->update([
-            'name' => $request['name'],
-        ]);
+        if (request()->ajax()){
+            $result = Activity::findOrFail( request()->input('id') )->update([
+                'name' => request()->input('name'),
+            ]);
 
-        return redirect()->back();
+            if (!$result) {
+                return response()->json([
+                    'result' => $result,
+                ], 500);
+            }
+
+            return response()->json([
+                'result' => $result,
+            ]);
+        }
     }
 
     public function destroy()

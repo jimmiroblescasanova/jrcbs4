@@ -15,7 +15,7 @@ class ProgramsController extends Controller
     public function index()
     {
         return view('configurations.programs.index', [
-            'programs' => Program::paginate(5),
+            'programs' => Program::orderBy('name')->paginate(5),
         ]);
     }
 

@@ -115,6 +115,7 @@
                 icon: 'warning',
                 text: '¿Estas seguro de querer eliminar la fila #'+row+'?',
                 showCancelButton: true,
+                cancelButtonText: 'No, cancelar!',
                 confirmButtonText: 'Eliminar',
                 confirmButtonColor: '#e3342f',
             }).then((result) => {
@@ -137,7 +138,7 @@
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
-                                text: 'No se puede eliminar si tiene registros asociadas',
+                                text: 'No se puede eliminar si tiene registros asociados',
                             });
                         }
                     });
@@ -147,10 +148,10 @@
 
         function editTag(id, name, color)
         {
-            $('#editTagsModal').modal('show');
             $('#edit-tag-id').val(id);
             $('#edit-tag-name').val(name);
             $('#edit-tag-color').val(color);
+            $('#editTagsModal').modal('show');
         }
     </script>
 @stop
