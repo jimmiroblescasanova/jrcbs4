@@ -67,7 +67,8 @@ Route::get('/companies/{company}/show', [CompaniesController::class, 'show'])->n
 Route::patch('/companies/{company}/show', [CompaniesController::class, 'update'])->name('companies.update');
 Route::delete('/companies/{company}/show', [CompaniesController::class, 'destroy'])->name('companies.destroy');
 Route::post('/companies/{company}/sync', [CompaniesController::class, 'sync'])->name('companies.sync');
-Route::post('/companies/report', [CompaniesController::class, 'report'])->name('companies.report');
+Route::post('/companies/report1', [CompaniesController::class, 'report1'])->name('companies.report1');
+Route::post('/companies/report2', [CompaniesController::class, 'report2'])->name('companies.report2');
 Route::get('/companies/export', [CompaniesController::class, 'export'])->name('companies.export');
 
 // Routes for contacts controller

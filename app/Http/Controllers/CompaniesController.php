@@ -6,6 +6,7 @@ use App\Exports\CompaniesExport;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use App\Models\Program;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -20,7 +21,7 @@ class CompaniesController extends Controller
     public function index()
     {
         return view('companies.index', [
-            'programs' => Program::all()
+            'programs' => Program::orderBy('name')->get(),
         ]);
     }
 
@@ -82,14 +83,26 @@ class CompaniesController extends Controller
         return Excel::download(new CompaniesExport, 'empresas-' . NOW()->format('dmY') . '.xlsx');
     }
 
-    public function report(Request $request)
+    public function report1(Request $request)
     {
-        $companies = Company::report($request->show)
+        $companies = Company::qReportContacts($request->show)
             ->orderBy('name', $request->order)
             ->get();
 
-        $pdf = PDF::loadView('companies.reports.companies_contacts_relationships', compact('companies'));
-        return $pdf->setPaper('letter', 'portrait')->stream();
+        $pdf = PDF::loadView('companies.reports.CompaniesContactsReport', compact('companies'));
 
+        return $pdf->setPaper('letter', 'portrait')->download('report-' . NOW()->format('ymd-s'));
+    }
+
+    public function report2(Request $request)
+    {
+
+        $companies = Company::qReportPrograms($request->show, $request->programs)
+            ->orderBy('name', $request->order)
+            ->get();
+
+        $pdf = PDF::loadView('companies.reports.CompaniesProgramsReport', compact('companies'));
+
+        return $pdf->setPaper('letter', 'portrait')->download('report-' . NOW()->format('ymd-s'));
     }
 }

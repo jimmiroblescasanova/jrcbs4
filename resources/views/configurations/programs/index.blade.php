@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header border-0">
-            <h3 class="card-title"><i class="fas fa-hdd mr-2"></i>Configuraciones</h3>
+            <h3 class="card-title"><i class="fas fa-hdd mr-2"></i>Programas</h3>
             <div class="card-tools">
                 {{ $programs->links('vendor.pagination.bootstrap-4-sm') }}
             </div>

@@ -57,7 +57,7 @@
 
                 @can('show tickets')
                     <li class="nav-header">MÓDULOS</li>
-                    <x-partials.sidebar-nav-link :route="route('tickets.index')" :active="request()->routeIs('tickets.*')" class="fas fa-calendar-check">Tickets</x-partials.sidebar-nav-link>
+                    <x-partials.sidebar-nav-link :route="route('tickets.index')" :active="request()->routeIs('tickets.*')" class="fas fa-calendar-check">Tareas</x-partials.sidebar-nav-link>
                 @endcan
 
                 @canany(['show users', 'show activities', 'show tags', 'show groups', 'edit hosts'])

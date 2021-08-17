@@ -1,7 +1,7 @@
 <x-main-layout>
     <x-slot name="header">
         <div class="col-sm-6">
-            <h1>Ver</h1>
+            <h1><i class="far fa-calendar-check mr-2"></i>Ver tarea</h1>
         </div>
     </x-slot>
 

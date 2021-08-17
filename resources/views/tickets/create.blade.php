@@ -1,6 +1,6 @@
 <x-main-layout>
     <x-slot name="header">
-        <h1><i class="far fa-calendar-check mr-2"></i>Agregar nuevo ticket</h1>
+        <h1><i class="far fa-calendar-check mr-2"></i>Agregar nueva tarea</h1>
     </x-slot>
 
     <div class="card">

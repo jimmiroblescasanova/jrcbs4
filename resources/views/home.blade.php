@@ -11,7 +11,7 @@
         <div class="col-3">
             <div class="card card-danger card-outline">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="far fa-calendar-check mr-2"></i>Tickets pendientes</h3>
+                    <h3 class="card-title"><i class="far fa-calendar-check mr-2"></i>Tareas pendientes</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">

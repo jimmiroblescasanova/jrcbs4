@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Company extends Model
@@ -21,13 +22,29 @@ class Company extends Model
             ->orWhere('tradename', 'LIKE', '%' . $search . '%');
     }
 
-    public static function report($show)
+    public static function qReportContacts($show): \Illuminate\Database\Eloquent\Builder
     {
         switch ($show) {
             case 1:
                 return static::query()->doesntHave('contacts');
             case 2:
                 return static::query()->has('contacts')->with('contacts');
+            default:
+                return static::query();
+        }
+    }
+
+    public static function qReportPrograms($show, $programs): \Illuminate\Database\Eloquent\Builder
+    {
+        switch ($show) {
+            case 1:
+                return static::query()->whereHas('programs', function (Builder $query) use ($programs) {
+                    $query->whereIn('id', $programs);
+                })->with('programs');
+            case 2:
+                return static::query()->whereDoesntHave('programs', function (Builder $query) use ($programs) {
+                    $query->whereIn('id', $programs);
+                })->with('programs');
             default:
                 return static::query();
         }
@@ -41,6 +58,11 @@ class Company extends Model
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = Str::upper($value);
+    }
+
+    public function setTradenameAttribute($value)
+    {
+        $this->attributes['tradename'] = Str::upper($value);
     }
 
     public function contacts()

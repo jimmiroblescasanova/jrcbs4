@@ -21,6 +21,8 @@
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item" data-toggle="modal" data-target="#reportCompaniesModal"><i
                                 class="fas fa-print mr-2"></i>Empresas y contactos</button>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#reportCompaniesProgramsModal"><i
+                                class="fas fa-print mr-2"></i>Empresas y programas</button>
                     </div>
                 </div>
             </div>
@@ -46,7 +48,14 @@
     <div class="modal fade" id="reportCompaniesModal" tabindex="-1" role="dialog" aria-labelledby="reportCompaniesModal"
          aria-hidden="true">
         <div class="modal-dialog">
-            @include('companies._parameters-report')
+            @include('companies.reports.CompaniesContactsOptions')
+        </div>
+    </div>
+
+    <div class="modal fade" id="reportCompaniesProgramsModal" tabindex="-1" role="dialog" aria-labelledby="reportCompaniesProgramsModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            @include('companies.reports.CompaniesProgramsOptions')
         </div>
     </div>
 

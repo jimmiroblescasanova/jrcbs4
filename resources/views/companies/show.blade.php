@@ -90,8 +90,8 @@
                                         <h2 class="lead"><b>{{ $contact->name }}</b></h2>
 {{--                                        <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>--}}
                                         <ul class="ml-4 mb-0 fa-ul text-muted">
-                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone mr-2"></i></span>Teléfono #: {{ $contact->phone }}</li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope mr-2"></i></span>{{ $contact->email }}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone mr-2"></i></span>Teléfono: {{ $contact->phone }}</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope mr-2"></i></span>Email: {{ $contact->email }}</li>
                                             <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clock mr-2"></i></span>Última actualización: {{ $contact->updated_at->diffForHumans() }}</li>
                                         </ul>
                                     </div>
