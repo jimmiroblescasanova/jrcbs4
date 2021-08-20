@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\GroupsController;
+use App\Http\Controllers\MailingController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\ProgramsController;
@@ -116,4 +117,10 @@ Route::prefix('users')->group(function () {
         Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
         Route::put('/{user}/edit', [UsersController::class, 'update'])->name('users.update');
     });
+});
+
+Route::prefix('mailing')->group(function () {
+    Route::get('/', [MailingController::class, 'index'])->name('mailing.index');
+    Route::get('/create', [MailingController::class, 'create'])->name('mailing.create');
+    Route::post('/create', [MailingController::class, 'store'])->name('mailing.store');
 });
