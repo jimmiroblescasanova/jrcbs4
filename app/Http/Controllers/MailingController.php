@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Jobs\SendMailingQueue;
+use Illuminate\Support\Facades\DB;
 
 class MailingController extends Controller
 {
     public function index()
     {
-        return view('mailing.index');
+        return view('mailing.index', [
+            'jobs' => DB::table('jobs')->where('queue', '=', 'mailings')->get(),
+            'failed_jobs' => DB::table('failed_jobs')->where('queue', '=', 'mailings')->get(),
+        ]);
     }
 
     public function create()
@@ -21,7 +25,7 @@ class MailingController extends Controller
     public function store(Request $request)
     {
         $status = 1;
-        $emails = [];
+        $emails = array();
 
         foreach ($request->to as $id) {
             $contacts = Company::find($id)->contacts()->get();
@@ -40,13 +44,11 @@ class MailingController extends Controller
             'status' => $status,
         ];
 
+        SendMailingQueue::dispatch($data)->onQueue('mailings');
 
-        // send all mail in the queue.
-        SendMailingQueue::dispatch($data);
-
-        // $mail = Mailing::create($data);
-
-        return $data;
+        return redirect()
+            ->route('mailing.index')
+            ->with('message', 'La campaña se ha creado y agregado a la cola para su envío.');
     }
 
     public function storeImage(Request $request)

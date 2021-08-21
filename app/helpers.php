@@ -21,3 +21,11 @@ function isProgramAnnual($type)
         return "Tradicional";
     }
 }
+
+function getJobDate($unixDate)
+{
+    $fecha = new DateTime();
+    $fecha->setTimestamp($unixDate);
+
+    return $fecha->format('d-m-Y H:i:s');
+}
