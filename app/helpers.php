@@ -14,8 +14,7 @@ function setActive($route)
 
 function isProgramAnnual($type)
 {
-    if ($type==true)
-    {
+    if ($type == true) {
         return "Anual";
     } else {
         return "Tradicional";

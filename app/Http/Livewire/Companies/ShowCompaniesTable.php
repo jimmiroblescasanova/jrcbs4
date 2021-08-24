@@ -13,6 +13,7 @@ class ShowCompaniesTable extends Component
 
     public $search = '';
     public $perPage = 10;
+    public $showInactive = 0;
     public $sortField = 'id';
     public $sortDirection = 'desc';
 
@@ -40,10 +41,16 @@ class ShowCompaniesTable extends Component
         $this->resetPage();
     }
 
+    public function updatedshowInactive()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.companies.show-companies-table', [
             'companies' => Company::search($this->search)
+                ->where('inactive', $this->showInactive)
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage),
         ]);

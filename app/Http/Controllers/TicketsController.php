@@ -13,7 +13,6 @@ use App\Notifications\NewComment;
 use App\Notifications\TicketClosed;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\TicketAssigned;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\SaveTicketRequest;
 use App\Http\Requests\SaveCommentRequest;
 

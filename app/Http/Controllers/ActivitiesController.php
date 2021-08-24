@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreActivityRequest;
 use App\Models\Activity;
-use http\Env\Response;
-use Illuminate\Http\Request;
 
 class ActivitiesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('configurations.activities.index', [
@@ -25,8 +28,8 @@ class ActivitiesController extends Controller
 
     public function update()
     {
-        if (request()->ajax()){
-            $result = Activity::findOrFail( request()->input('id') )->update([
+        if (request()->ajax()) {
+            $result = Activity::findOrFail(request()->input('id'))->update([
                 'name' => request()->input('name'),
             ]);
 
@@ -44,8 +47,7 @@ class ActivitiesController extends Controller
 
     public function destroy()
     {
-        if (request()->ajax())
-        {
+        if (request()->ajax()) {
             $result = Activity::findOrFail(request()->input('id'))->delete();
 
             if (!$result) {

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exports\CompaniesExport;
 use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\Program;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -33,8 +33,7 @@ class CompaniesController extends Controller
             'tradename' => $request->tradename,
         ]);
 
-        foreach($request->programs as $program)
-        {
+        foreach ($request->programs as $program) {
             $company->programs()->attach($program);
         }
 
@@ -49,13 +48,9 @@ class CompaniesController extends Controller
         ]);
     }
 
-    public function update(Company $company, Request $request)
+    public function update(Company $company, UpdateCompanyRequest $request)
     {
-        $company->update([
-            'name' => $request->name,
-            'rfc' => $request->rfc,
-            'tradename' => $request->tradename,
-        ]);
+        $company->update($request->validated());
 
         return redirect()->route('companies.show', $company)->with('success', 'Los datos se han actualizado con éxito');
     }
@@ -85,9 +80,16 @@ class CompaniesController extends Controller
 
     public function report1(Request $request)
     {
-        $companies = Company::qReportContacts($request->show)
-            ->orderBy('name', $request->order)
-            ->get();
+        if ($request->status) {
+            $companies = Company::qReportContacts($request->show)
+                ->orderBy('name', $request->order)
+                ->get();
+        } else {
+            $companies = Company::qReportContacts($request->show)
+                ->where('inactive', '=', 0)
+                ->orderBy('name', $request->order)
+                ->get();
+        }
 
         $pdf = PDF::loadView('companies.reports.CompaniesContactsReport', compact('companies'));
 
@@ -96,10 +98,17 @@ class CompaniesController extends Controller
 
     public function report2(Request $request)
     {
+        if ($request->status) {
+            $companies = Company::qReportPrograms($request->show, $request->programs)
+                ->orderBy('name', $request->order)
+                ->get();
+        } else {
+            $companies = Company::qReportPrograms($request->show, $request->programs)
+                ->where('inactive', 0)
+                ->orderBy('name', $request->order)
+                ->get();
+        }
 
-        $companies = Company::qReportPrograms($request->show, $request->programs)
-            ->orderBy('name', $request->order)
-            ->get();
 
         $pdf = PDF::loadView('companies.reports.CompaniesProgramsReport', compact('companies'));
 

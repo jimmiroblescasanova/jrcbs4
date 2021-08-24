@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class TagsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         return view('configurations.tags.index', [
@@ -36,15 +41,14 @@ class TagsController extends Controller
 
     public function destroy()
     {
-        if (request()->ajax())
-        {
+        if (request()->ajax()) {
             $result = Tag::findOrFail(request()->input('id'))->delete();
 
-            if (!$result){
-                return response()->json(['response'=>$result], 500);
+            if (!$result) {
+                return response()->json(['response' => $result], 500);
             }
 
-            return response()->json(['response'=>$result]);
+            return response()->json(['response' => $result]);
         }
     }
 }

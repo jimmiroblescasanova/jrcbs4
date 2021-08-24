@@ -23,10 +23,19 @@
                     <option value="desc">Descendente</option>
                 </select>
             </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="status" id="status" value="1">
+                        Incluir empresas inactivas
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save mr-2"></i>Procesar</button>
-            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fas fa-ban mr-2"></i>Cancelar</button>
+            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i
+                    class="fas fa-ban mr-2"></i>Cancelar</button>
         </div>
     </form>
 </div>
