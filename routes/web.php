@@ -21,11 +21,16 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Routes for all configurations
 Route::prefix('configurations')->group(function () {
     Route::get('/', [ConfigurationsController::class, 'index'])->name('configurations.index');
-    Route::patch('/', [ConfigurationsController::class, 'update'])->name('configurations.hosts.update');
+
+    Route::middleware(['can:edit hosts'])->group(function () {
+        Route::patch('/', [ConfigurationsController::class, 'update'])->name('configurations.hosts.update');
+    });
     // Prefix for groups controller
     Route::prefix('groups')->group(function () {
-        Route::middleware(['can:create groups'])->group(function () {
+        Route::middleware(['can:show groups'])->group(function () {
             Route::get('/', [GroupsController::class, 'index'])->name('configurations.groups.index');
+        });
+        Route::middleware(['can:create groups'])->group(function () {
             Route::get('/create', [GroupsController::class, 'create'])->name('configurations.groups.create');
             Route::post('/', [GroupsController::class, 'store'])->name('configurations.groups.store');
         });
@@ -36,47 +41,71 @@ Route::prefix('configurations')->group(function () {
         });
     });
     Route::prefix('programs')->group(function () {
-        Route::get('/', [ProgramsController::class, 'index'])->name('configurations.programs.index');
-        Route::get('/create', [ProgramsController::class, 'create'])->name('configurations.programs.create');
-        Route::post('/create', [ProgramsController::class, 'store'])->name('configurations.programs.store');
-        Route::get('/{program}/edit', [ProgramsController::class, 'edit'])->name('configurations.programs.edit');
-        Route::put('/{program}/edit', [ProgramsController::class, 'update'])->name('configurations.programs.update');
-        Route::delete('/', [ProgramsController::class, 'destroy'])->name('configurations.programs.delete');
+        Route::middleware(['can:show programs'])->group(function () {
+            Route::get('/', [ProgramsController::class, 'index'])->name('configurations.programs.index');
+        });
+        Route::middleware(['can:create programs'])->group(function () {
+            Route::get('/create', [ProgramsController::class, 'create'])->name('configurations.programs.create');
+            Route::post('/create', [ProgramsController::class, 'store'])->name('configurations.programs.store');
+        });
+        Route::middleware(['can:edit programs'])->group(function () {
+            Route::get('/{program}/edit', [ProgramsController::class, 'edit'])->name('configurations.programs.edit');
+            Route::put('/{program}/edit', [ProgramsController::class, 'update'])->name('configurations.programs.update');
+            Route::delete('/', [ProgramsController::class, 'destroy'])->name('configurations.programs.delete');
+        });
     });
 
     Route::prefix('activities')->group(function () {
-        Route::get('/', [ActivitiesController::class, 'index'])->name('configurations.activities.index');
-        Route::post('/', [ActivitiesController::class, 'store'])->name('configurations.activities.store');
-        Route::patch('/', [ActivitiesController::class, 'update'])->name('configurations.activities.update');
-        Route::delete('/', [ActivitiesController::class, 'destroy'])->name('configurations.activities.delete');
+        Route::middleware(['can:show activities'])->group(function () {
+            Route::get('/', [ActivitiesController::class, 'index'])->name('configurations.activities.index');
+        });
+        Route::middleware(['can:create activities'])->group(function () {
+            Route::post('/', [ActivitiesController::class, 'store'])->name('configurations.activities.store');
+        });
+        Route::middleware(['can:edit activities'])->group(function () {
+            Route::patch('/', [ActivitiesController::class, 'update'])->name('configurations.activities.update');
+            Route::delete('/', [ActivitiesController::class, 'destroy'])->name('configurations.activities.delete');
+        });
     });
 
     Route::prefix('tags')->group(function () {
-        Route::get('/', [TagsController::class, 'index'])->name('configurations.tags.index');
-        Route::post('/', [TagsController::class, 'store'])->name('configurations.tags.store');
-        Route::put('/', [TagsController::class, 'update'])->name('configurations.tags.update');
-        Route::delete('/', [TagsController::class, 'destroy'])->name('configurations.tags.delete');
+        Route::middleware(['can:show tags'])->group(function () {
+            Route::get('/', [TagsController::class, 'index'])->name('configurations.tags.index');
+        });
+        Route::middleware(['can:create tags'])->group(function () {
+            Route::post('/', [TagsController::class, 'store'])->name('configurations.tags.store');
+        });
+        Route::middleware(['can:edit tags'])->group(function () {
+            Route::put('/', [TagsController::class, 'update'])->name('configurations.tags.update');
+            Route::delete('/', [TagsController::class, 'destroy'])->name('configurations.tags.delete');
+        });
     });
 });
 
 // Route for companies controller
-Route::get('/companies', [CompaniesController::class, 'index'])
-    ->middleware('can:show companies')
-    ->name('companies.index');
-Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
-Route::get('/companies/{company}/show', [CompaniesController::class, 'show'])->name('companies.show');
-Route::patch('/companies/{company}/show', [CompaniesController::class, 'update'])->name('companies.update');
-Route::delete('/companies/{company}/show', [CompaniesController::class, 'destroy'])->name('companies.destroy');
-Route::post('/companies/{company}/sync', [CompaniesController::class, 'sync'])->name('companies.sync');
-Route::post('/companies/report1', [CompaniesController::class, 'report1'])->name('companies.report1');
-Route::post('/companies/report2', [CompaniesController::class, 'report2'])->name('companies.report2');
-Route::get('/companies/export', [CompaniesController::class, 'export'])->name('companies.export');
+Route::prefix('companies')->group(function () {
+    Route::middleware(['can:show companies'])->group(function () {
+        Route::get('/', [CompaniesController::class, 'index'])->name('companies.index');
+    });
+    Route::middleware(['can:create companies'])->group(function () {
+        Route::post('/', [CompaniesController::class, 'store'])->name('companies.store');
+        Route::get('/{company}/show', [CompaniesController::class, 'show'])->name('companies.show');
+    });
+    Route::middleware(['can:edit companies'])->group(function () {
+        Route::patch('/{company}/show', [CompaniesController::class, 'update'])->name('companies.update');
+        Route::delete('/{company}/show', [CompaniesController::class, 'destroy'])->name('companies.destroy');
+        Route::post('/{company}/sync', [CompaniesController::class, 'sync'])->name('companies.sync');
+    });
+    Route::post('/report1', [CompaniesController::class, 'report1'])->name('companies.report1');
+    Route::post('/report2', [CompaniesController::class, 'report2'])->name('companies.report2');
+    Route::get('/export', [CompaniesController::class, 'export'])->name('companies.export');
+});
 
 // Routes for contacts controller
 Route::prefix('contacts')->group(function () {
-    Route::get('/', [ContactsController::class, 'index'])
-        ->middleware('can:show contacts')
-        ->name('contacts.index');
+    Route::middleware(['can:show contacts'])->group(function () {
+        Route::get('/', [ContactsController::class, 'index'])->name('contacts.index');
+    });
     Route::middleware(['can:create contacts'])->group(function () {
         Route::get('/create', [ContactsController::class, 'create'])->name('contacts.create');
         Route::post('/create', [ContactsController::class, 'store'])->name('contacts.store');
@@ -89,9 +118,9 @@ Route::prefix('contacts')->group(function () {
 
 // Routes for tickets controller
 Route::prefix('tickets')->group(function () {
-    Route::get('/', [TicketsController::class, 'index'])
-        ->middleware('can:show tickets')
-        ->name('tickets.index');
+    Route::middleware(['can:show tickets'])->group(function () {
+        Route::get('/', [TicketsController::class, 'index'])->name('tickets.index');
+    });
     Route::middleware(['can:create tickets'])->group(function () {
         Route::get('/create', [TicketsController::class, 'create'])->name('tickets.create');
         Route::post('/create', [TicketsController::class, 'store'])->name('tickets.store');
@@ -106,9 +135,9 @@ Route::prefix('tickets')->group(function () {
 
 // Routes for users controller
 Route::prefix('users')->group(function () {
-    Route::get('/', [UsersController::class, 'index'])
-        ->middleware('can:show users')
-        ->name('users.index');
+    Route::middleware(['can:show users'])->group(function () {
+        Route::get('/', [UsersController::class, 'index'])->name('users.index');
+    });
     Route::middleware(['can:create users'])->group(function () {
         Route::get('/create', [UsersController::class, 'create'])->name('users.create');
         Route::post('/create', [UsersController::class, 'store'])->name('users.store');
@@ -120,7 +149,11 @@ Route::prefix('users')->group(function () {
 });
 
 Route::prefix('mailing')->group(function () {
-    Route::get('/', [MailingController::class, 'index'])->name('mailing.index');
-    Route::get('/create', [MailingController::class, 'create'])->name('mailing.create');
-    Route::post('/create', [MailingController::class, 'store'])->name('mailing.store');
+    Route::middleware(['can:show mailings'])->group(function () {
+        Route::get('/', [MailingController::class, 'index'])->name('mailing.index');
+    });
+    Route::middleware(['can:create mailings'])->group(function () {
+        Route::get('/create', [MailingController::class, 'create'])->name('mailing.create');
+        Route::post('/create', [MailingController::class, 'store'])->name('mailing.store');
+    });
 });

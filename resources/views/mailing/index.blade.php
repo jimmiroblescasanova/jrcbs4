@@ -4,10 +4,12 @@
             <h1><i class="far fa-envelope mr-2"></i>Enviar correo masivo</h1>
         </div>
         <div class="col-sm-6">
+            @can('create mailings')
             <div class="float-right">
                 <a href="{{ route('mailing.create') }}" class="btn btn-primary btn-sm"><i
                         class="fas fa-pencil-alt mr-2"></i>Nuevo</a>
             </div>
+            @endcan
         </div>
     </x-slot>
 

@@ -4,12 +4,14 @@
             <h1><i class="far fa-building mr-2"></i>Empresas / Editar</h1>
         </div>
         <div class="col-sm-6">
+            @can('edit companies')
             <button onclick="confirmDeletion();" type="button" class="btn btn-danger btn-sm float-right"><i
                     class="fas fa-trash-alt mr-2" aria-hidden="true"></i>Eliminar</button>
             <form action="{{ route('companies.destroy', $company) }}" method="POST" id="delete-company-form"
                 class="d-none">
                 @csrf @method('delete')
             </form>
+            @endcan
         </div>
     </x-slot>
 
@@ -56,10 +58,12 @@
                             </div>
                         </div>
                     </div>
+                    @can('edit companies')
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-sm"><i
                                 class="fas fa-edit mr-2"></i>Actualizar</button>
                     </div>
+                    @endcan
                 </form>
             </div>
         </div>
@@ -83,8 +87,10 @@
                         @endforeach
                     </div>
                     <div class="card-footer">
+                        @can('edit companies')
                         <button type="submit" class="btn btn-sm btn-primary"><i
                                 class="fas fa-edit mr-2"></i>Actualizar</button>
+                        @endcan
                     </div>
                 </form>
             </div>

@@ -62,30 +62,43 @@
                             <div class="card-body p-0">
                                 <ul class="nav nav-pills flex-column">
                                     <li class="nav-item">
-                                        <a href="{{ route('configurations.index') }}" class="nav-link {{ setActive('configurations.index') }}">
+                                        <a href="{{ route('configurations.index') }}"
+                                            class="nav-link {{ setActive('configurations.index') }}">
                                             <i class="fas fa-key mr-2"></i>Hosts
                                         </a>
                                     </li>
+                                    @can('show groups')
                                     <li class="nav-item">
-                                        <a href="{{ route('configurations.groups.index') }}" class="nav-link {{ setActive('configurations.groups.*') }}">
+                                        <a href="{{ route('configurations.groups.index') }}"
+                                            class="nav-link {{ setActive('configurations.groups.*') }}">
                                             <i class="fas fa-user-lock mr-2"></i>Grupos
                                         </a>
                                     </li>
+                                    @endcan
+                                    @can('show activities')
                                     <li class="nav-item">
-                                        <a href="{{ route('configurations.activities.index') }}" class="nav-link {{ setActive('configurations.activities.*') }}">
+                                        <a href="{{ route('configurations.activities.index') }}"
+                                            class="nav-link {{ setActive('configurations.activities.*') }}">
                                             <i class="fas fa-clipboard-list mr-2"></i>Actividades
                                         </a>
                                     </li>
+                                    @endcan
+                                    @can('show tags')
                                     <li class="nav-item">
-                                        <a href="{{ route('configurations.tags.index') }}" class="nav-link {{ setActive('configurations.tags.*') }}">
+                                        <a href="{{ route('configurations.tags.index') }}"
+                                            class="nav-link {{ setActive('configurations.tags.*') }}">
                                             <i class="fas fa-tags mr-2"></i>Etiquetas
                                         </a>
                                     </li>
+                                    @endcan
+                                    @can('show programs')
                                     <li class="nav-item">
-                                        <a href="{{ route('configurations.programs.index') }}" class="nav-link {{ setActive('configurations.programs.*') }}">
+                                        <a href="{{ route('configurations.programs.index') }}"
+                                            class="nav-link {{ setActive('configurations.programs.*') }}">
                                             <i class="fas fa-hdd mr-2"></i>Programas
                                         </a>
                                     </li>
+                                    @endcan
                                 </ul>
                             </div>
                             <!-- /.card-body -->
@@ -93,7 +106,7 @@
                     </div>
                     <div class="col-md-9">
                         @if (session()->has('success'))
-                            <x-partials.alert type="success" icon="fas fa-check" :message="session('message')" />
+                        <x-partials.alert type="success" icon="fas fa-check" :message="session('message')" />
                         @endif
 
                         @yield('content')
@@ -114,7 +127,8 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js">
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
