@@ -30,15 +30,16 @@
                                 <th>ID</th>
                                 <th>Estado</th>
                                 <th>Día / Hora</th>
+                                <th>Cancelar</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($jobs as $job)
                             <tr>
                                 <td>{{ $job->id }}</td>
-                                <td><span class="badge badge-warning">Procesando...</span></td>
-                                <td>{{ getJobDate($job->created_at)  }}
-                                </td>
+                                <td><span class="badge badge-warning">En espera...</span></td>
+                                <td>{{ getJobDate($job->created_at) }}</td>
+                                <td>Cancelar</td>
                             </tr>
                             @endforeach
                         </tbody>

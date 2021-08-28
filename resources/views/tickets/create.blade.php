@@ -13,7 +13,8 @@
                         <x-forms.select name="contact_id" class="select2" label="Seleccionar un contacto">
                             <option></option>
                             @foreach ($contacts as $contact)
-                                <option value="{{ $contact->id }}">{{ $contact->full_name }} ({{ Str::limit($contact->company->name ?? '', 20, '...') }})</option>
+                            <option value="{{ $contact->id }}">{{ $contact->full_name }}
+                                ({{ Str::limit($contact->company->name ?? '', 30, '...') }})</option>
                             @endforeach
                         </x-forms.select>
                     </div>
@@ -21,7 +22,7 @@
                         <x-forms.select name="activity_id" class="select2" label="Actividad">
                             <option></option>
                             @foreach ($activities as $id => $activity)
-                                <option value="{{ $id }}">{{ $activity }}</option>
+                            <option value="{{ $id }}">{{ $activity }}</option>
                             @endforeach
                         </x-forms.select>
                     </div>
@@ -31,7 +32,7 @@
                         <x-forms.select name="tag_id" class="select2" label="Seleccionar etiqueta">
                             <option></option>
                             @foreach ($tags as $id => $tag)
-                                <option value="{{ $id }}">{{ $tag }}</option>
+                            <option value="{{ $id }}">{{ $tag }}</option>
                             @endforeach
                         </x-forms.select>
                     </div>
@@ -39,25 +40,28 @@
                         <x-forms.select name="assigned_to" class="select2" label="Asignar a">
                             <option></option>
                             @foreach ($users as $id => $user)
-                                <option value="{{ $id }}">{{ $user }}</option>
+                            <option value="{{ $id }}">{{ $user }}</option>
                             @endforeach
                         </x-forms.select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12 col-md-12">
-                        <x-form-textarea class="summernote" label="Notas" name="note" placeholder="Agrega unas notas..." />
+                        <x-form-textarea class="summernote" label="Notas" name="note"
+                            placeholder="Agrega unas notas..." />
                         <small class="text-muted">Máximo 255 carácteres.</small>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="exampleFormControlFile1">Subir archivo</label>
-                        <input type="file" name="attachment" class="form-control-file @error('attachment') is-invalid @enderror" id="exampleFormControlFile1">
+                        <input type="file" name="attachment"
+                            class="form-control-file @error('attachment') is-invalid @enderror"
+                            id="exampleFormControlFile1">
                         @error('attachment')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                         @enderror
                     </div>
                 </div>

@@ -13,6 +13,8 @@ use App\Http\Controllers\ProgramsController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\ActivitiesController;
 use App\Http\Controllers\ConfigurationsController;
+use App\Http\Livewire\Reports\CompaniesContacts;
+use App\Http\Livewire\Reports\CompaniesPrograms;
 
 Auth::routes();
 
@@ -156,4 +158,14 @@ Route::prefix('mailing')->group(function () {
         Route::get('/create', [MailingController::class, 'create'])->name('mailing.create');
         Route::post('/create', [MailingController::class, 'store'])->name('mailing.store');
     });
+});
+
+
+Route::prefix('reports')->group(function () {
+    Route::get('/', function () {
+        return view('reports.index');
+    })->name('reports.index');
+
+    Route::get('/companies-contacts', CompaniesContacts::class)->name('reports.companies-contacts');
+    Route::get('/companies-programs', CompaniesPrograms::class)->name('reports.companies-programs');
 });

@@ -22,23 +22,10 @@
             </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        {{-- <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Buscar menú" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div> --}}
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+
                 <x-partials.sidebar-nav-link :route="route('home')" :active="request()->routeIs('home')"
                     class="fas fa-home" title="Inicio" />
 
@@ -65,6 +52,9 @@
                     class="fas fa-envelope">Mailing</x-partials.sidebar-nav-link>
                 @endcan
                 @endcanany
+
+                <x-partials.sidebar-nav-link :route="route('reports.index')" :active="request()->routeIs('reports.*')"
+                    class="fas fa-poll">Reportes</x-partials.sidebar-nav-link>
 
                 @canany(['show users', 'show activities', 'show tags', 'show groups', 'edit hosts'])
                 <li class="nav-header">OTROS</li>

@@ -34,7 +34,7 @@ class TicketsController extends Controller
             'contacts' => Contact::all(),
             'tags' => Tag::pluck('name', 'id'),
             'activities' => Activity::pluck('name', 'id'),
-            'users' => User::pluck('name', 'id'),
+            'users' => User::where('id', '!=', Auth::id())->pluck('name', 'id'),
         ]);
     }
 
