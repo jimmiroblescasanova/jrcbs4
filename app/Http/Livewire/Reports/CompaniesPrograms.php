@@ -11,19 +11,19 @@ use Illuminate\Support\Facades\Storage;
 class CompaniesPrograms extends Component
 {
     public $show, $order, $status;
-    public $programSelected = [];
-    public $programs;
+    public $program = [];
+    public $programList;
 
     protected $rules = [
         'show' => 'required',
-        'programSelected' => 'required|array',
+        'program' => 'required|array',
         'order' => 'required',
         'status' => 'nullable',
     ];
 
     public function mount()
     {
-        $this->programs = Program::pluck('name', 'id');
+        $this->programList = Program::pluck('name', 'id');
     }
 
     public function generate()
@@ -31,11 +31,11 @@ class CompaniesPrograms extends Component
         $this->validate();
 
         if ($this->status) {
-            $companies = Company::qReportPrograms($this->show, $this->programSelected)
+            $companies = Company::qReportPrograms($this->show, $this->program)
                 ->orderBy('name', $this->order)
                 ->get();
         } else {
-            $companies = Company::qReportPrograms($this->show, $this->programSelected)
+            $companies = Company::qReportPrograms($this->show, $this->program)
                 ->where('inactive', 0)
                 ->orderBy('name', $this->order)
                 ->get();

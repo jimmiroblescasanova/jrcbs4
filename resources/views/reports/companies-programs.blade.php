@@ -105,7 +105,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="4">No existen programas asociados</td>
+                <td colspan="2">No existen programas asociados</td>
             </tr>
             @endforelse
         </tbody>

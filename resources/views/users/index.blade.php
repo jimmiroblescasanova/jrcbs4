@@ -28,18 +28,18 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Email</th>
-                        @can('edit users')<th>Editar</th>@endcan
+                        @can('edit users')<th style="width: 10%">&nbsp;</th>@endcan
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td scope="row">{{ $user->id }}</td>
+                            <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             @can('edit users')
-                                <td>
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-default btn-xs"><i class="fas fa-eye mr-2"></i>Editar</a>
+                                <td class="text-center">
+                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-default btn-xs"><i class="fas fa-edit mr-2"></i>Editar</a>
                                 </td>
                             @endcan
                         </tr>
@@ -47,8 +47,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="card-footer text-muted">
-            {{ $users->links() }}
+        <div class="card-footer clearfix">
+            {{ $users->links('vendor.pagination.bootstrap-4') }}
         </div>
     </div>
 

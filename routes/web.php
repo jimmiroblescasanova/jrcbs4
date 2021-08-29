@@ -160,7 +160,6 @@ Route::prefix('mailing')->group(function () {
     });
 });
 
-
 Route::prefix('reports')->group(function () {
     Route::get('/', function () {
         return view('reports.index');

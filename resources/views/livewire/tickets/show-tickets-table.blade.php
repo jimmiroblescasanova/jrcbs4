@@ -55,7 +55,7 @@
                         <x-tables.table-heading sortable wire:click="sortBy('activity')" :direction="$sortField === 'activity_id' ? $sortDirection : null">Actividad</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('user')" :direction="$sortField === 'user' ? $sortDirection : null">Asignado a</x-tables.table-heading>
                         <th>Etiqueta</th>
-                        @can('edit tickets')<th style="width: 10%;">Opciones</th>@endcan
+                        @can('edit tickets')<th style="width: 10%;">&nbsp;</th>@endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@
                             <td>{!! tag_label($ticket->tag) !!}</td>
                             @can('edit tickets')
                                 <td class="text-center">
-                                    <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-primary btn-xs"><i class="fas fa-eye mr-2"></i>Ver</a>
+                                    <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-default btn-xs"><i class="fas fa-eye mr-2"></i>Revisar</a>
                                 </td>
                             @endcan
                         </tr>

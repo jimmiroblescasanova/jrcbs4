@@ -36,21 +36,21 @@
                             :direction="$sortField === 'tradename' ? $sortDirection : null">Nombre comercial
                         </x-tables.table-heading>
                         @can('edit companies')
-                        <th style="width: 10%;">Opciones</th>
+                        <th style="width: 10%;">&nbsp;</th>
                         @endcan
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($companies as $company)
                     <tr>
-                        <td scope="row">{{ $company->id }}</td>
+                        <td>{{ $company->id }}</td>
                         <td>{{ $company->name }}</td>
                         <td>{{ $company->rfc }}</td>
                         <td>{{ $company->tradename }}</td>
                         @can('edit companies')
                         <td class="text-center">
                             <a href="{{ route('companies.show', $company) }}" class="btn btn-default btn-xs mr-2">
-                                <i class="fas fa-edit mr-2"></i>Ver
+                                <i class="fas fa-edit mr-2"></i>Editar
                             </a>
                         </td>
                         @endcan
