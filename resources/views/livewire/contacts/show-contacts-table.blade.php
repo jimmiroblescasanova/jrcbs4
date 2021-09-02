@@ -4,14 +4,16 @@
     @endif
     <div class="row">
         <div class="form-group col-12 col-md-10">
-            <input type="text"
+            <label for="searchInput" class="sr-only">Buscar</label>
+            <input type="text" id="searchInput"
                 wire:model.debounce.500ms='search'
                 class="form-control border-0 shadow-sm"
                 placeholder="Buscar por nombre, apellidos, email"
             />
         </div>
         <div class="form-group col-12 col-md-2">
-            <select class="form-control border-0 shadow-sm" wire:model='perPage'>
+            <label for="perPage" class="sr-only">Mostrar</label>
+            <select id="perPage" class="form-control border-0 shadow-sm" wire:model='perPage'>
                 <option>10</option>
                 <option>15</option>
                 <option>25</option>
@@ -29,28 +31,23 @@
                         <x-tables.table-heading sortable wire:click="sortBy('lastname')" :direction="$sortField === 'lastname' ? $sortDirection : null">Apellidos</x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('email')" :direction="$sortField === 'email' ? $sortDirection : null">Email</x-tables.table-heading>
                         <th>Teléfono</th>
-                        @can('edit contacts') <th style="width: 10%;">Opciones</th> @endcan
+                        <th style="width: 10%;">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($contacts as $contact)
                         <tr>
-                            <td scope="row">{{ $contact->id }}</td>
+                            <td>{{ $contact->id }}</td>
                             <td>{{ $contact->name }}</td>
                             <td>{{ $contact->lastname }}</td>
                             <td>{{ $contact->email }}</td>
                             <td>{{ $contact->phone }}</td>
-                            @can('edit contacts')
-                                <td class="text-center">
+                            <td class="text-center">
                                 <a href="{{ route('contacts.edit', $contact) }}" type="button"
-                                    class="btn btn-xs btn-default mr-2">
-                                    <i class="fas fa-edit"></i>
+                                   class="btn btn-xs btn-default mr-2">
+                                    <i class="fas fa-edit mr-2"></i>Editar
                                 </a>
-                                <button type="button" onclick="confirmDeletion({{ $contact->id }}, '{{ $contact->name }}')" class="btn btn-xs btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
                             </td>
-                            @endcan
                         </tr>
                     @empty
                         <tr>

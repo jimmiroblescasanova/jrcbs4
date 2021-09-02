@@ -12,22 +12,4 @@
 
     @livewire('contacts.show-contacts-table')
 
-    <x-slot name="custom_scripts">
-        <script>
-            function confirmDeletion(id, name) {
-                swal({
-                title: "Confirmar",
-                text: "Se eliminará: " + name + ", no se podrá recuperar finalizado el proceso.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        Livewire.emit('deleteContact', id);
-                    }
-                });
-            }
-        </script>
-    </x-slot>
 </x-main-layout>

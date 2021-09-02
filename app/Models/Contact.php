@@ -29,7 +29,7 @@ class Contact extends Model
         return $this->hasMany(Ticket::class);
     }
 
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return "{$this->attributes['name']} {$this->attributes['lastname']}";
     }

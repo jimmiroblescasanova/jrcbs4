@@ -151,7 +151,7 @@
     <x-slot name="custom_scripts">
         <script>
             function confirmDeletion() {
-                swal({
+                Swal({
                     title: "Confirmar",
                     text: "Se eliminará la empresa, no se podrá recuperar finalizado el proceso. Los contactos serán des-asociados.",
                     icon: "warning",

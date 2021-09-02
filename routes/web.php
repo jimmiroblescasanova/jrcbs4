@@ -91,15 +91,13 @@ Route::prefix('companies')->group(function () {
     });
     Route::middleware(['can:create companies'])->group(function () {
         Route::post('/', [CompaniesController::class, 'store'])->name('companies.store');
-        Route::get('/{company}/show', [CompaniesController::class, 'show'])->name('companies.show');
     });
     Route::middleware(['can:edit companies'])->group(function () {
+        Route::get('/{company}/show', [CompaniesController::class, 'show'])->name('companies.show');
         Route::patch('/{company}/show', [CompaniesController::class, 'update'])->name('companies.update');
         Route::delete('/{company}/show', [CompaniesController::class, 'destroy'])->name('companies.destroy');
         Route::post('/{company}/sync', [CompaniesController::class, 'sync'])->name('companies.sync');
     });
-    Route::post('/report1', [CompaniesController::class, 'report1'])->name('companies.report1');
-    Route::post('/report2', [CompaniesController::class, 'report2'])->name('companies.report2');
     Route::get('/export', [CompaniesController::class, 'export'])->name('companies.export');
 });
 
@@ -115,6 +113,7 @@ Route::prefix('contacts')->group(function () {
     Route::middleware(['can:edit contacts'])->group(function () {
         Route::get('/{contact}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');
         Route::patch('/{contact}/edit', [ContactsController::class, 'update'])->name('contacts.update');
+        Route::delete('/{contact}/edit', [ContactsController::class, 'destroy'])->name('contacts.delete');
     });
 });
 

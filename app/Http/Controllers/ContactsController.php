@@ -52,4 +52,20 @@ class ContactsController extends Controller
 
         return redirect()->route('contacts.index');
     }
+
+    public function destroy(Contact $contact)
+    {
+        $name = $contact->name;
+
+        if ( $contact->tickets()->exists() )
+        {
+            session()->flash('error', "El contacto no se puede eliminar.");
+            return redirect()->back();
+        }
+
+        $contact->delete();
+        session()->flash('message', "Contacto: <b>{$name}</b>, eliminado correctamente.");
+
+        return redirect()->route('contacts.index');
+    }
 }

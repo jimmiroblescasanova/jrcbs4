@@ -44,24 +44,6 @@ class ShowContactsTable extends Component
         $this->resetPage();
     }
 
-    public function deleteContact(Contact $contact)
-    {
-        if ($contact->tickets()->exists()) {
-            $this->emit('LiveAlert', [
-                'icon' => 'error',
-                'title' => 'Error al eliminar',
-                'message' => 'No se puede eliminar si tiene tickets activos.'
-            ]);
-        } else {
-            $contact->delete();
-            $this->emit('LiveAlert', [
-                'icon' => 'success',
-                'title' => 'Eliminación exitosa',
-                // 'message' => 'No se puede eliminar si tiene tickets activos.'
-            ]);
-        }
-    }
-
     public function render()
     {
         return view('livewire.contacts.show-contacts-table', [
