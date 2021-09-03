@@ -10,6 +10,8 @@
                     data-target="#createCompanyModal">
                     <i class="fa fa-pencil-alt mr-2" aria-hidden="true"></i>Nuevo
                 </button>
+                <a href="{{ route('companies.export') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-download mr-2"></i>XLS</a>
             </div>
         </div>
         @endcan

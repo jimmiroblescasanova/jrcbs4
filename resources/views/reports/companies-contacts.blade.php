@@ -64,6 +64,10 @@
             vertical-align: text-top;
             width: 20%
         }
+
+        .table-small {
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -90,26 +94,28 @@
             <td>{{ $company->rfc }}</td>
         </tr>
     </table>
-    <table class="table">
+    <table class="table table-small">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Nombre</th>
                 <th>Teléfono</th>
                 <th>Email</th>
+                <th>Actualizado</th>
             </tr>
         </thead>
         <tbody>
             @forelse($company->contacts as $row => $contact)
-            <tr class="row">
-                <td>{{ $row + 1 }}</td>
-                <td>{{ $contact->name }}</td>
+            <tr>
+                <td style="width: 5%;">{{ $row + 1 }}</td>
+                <td style="width: 40%;">{{ $contact->name }}</td>
                 <td>{{ $contact->phone }}</td>
                 <td>{{ $contact->email }}</td>
+                <td>{{ $contact->updated_at->diffForHumans() }}</td>
             </tr>
             @empty
             <tr>
-                <td colspan="4">No existen contactos asociados</td>
+                <td colspan="5">No existen contactos asociados</td>
             </tr>
             @endforelse
         </tbody>

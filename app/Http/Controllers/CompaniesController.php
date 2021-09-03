@@ -78,40 +78,4 @@ class CompaniesController extends Controller
         return Excel::download(new CompaniesExport, 'empresas-' . NOW()->format('dmY') . '.xlsx');
     }
 
-    public function report1(Request $request)
-    {
-        if ($request->status) {
-            $companies = Company::qReportContacts($request->show)
-                ->orderBy('name', $request->order)
-                ->get();
-        } else {
-            $companies = Company::qReportContacts($request->show)
-                ->where('inactive', '=', 0)
-                ->orderBy('name', $request->order)
-                ->get();
-        }
-
-        $pdf = PDF::loadView('companies.reports.CompaniesContactsReport', compact('companies'));
-
-        return $pdf->setPaper('letter', 'portrait')->download('report-' . NOW()->format('ymd-s'));
-    }
-
-    public function report2(Request $request)
-    {
-        if ($request->status) {
-            $companies = Company::qReportPrograms($request->show, $request->programs)
-                ->orderBy('name', $request->order)
-                ->get();
-        } else {
-            $companies = Company::qReportPrograms($request->show, $request->programs)
-                ->where('inactive', 0)
-                ->orderBy('name', $request->order)
-                ->get();
-        }
-
-
-        $pdf = PDF::loadView('companies.reports.CompaniesProgramsReport', compact('companies'));
-
-        return $pdf->setPaper('letter', 'portrait')->download('report-' . NOW()->format('ymd-s'));
-    }
 }

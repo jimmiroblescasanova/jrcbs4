@@ -46,7 +46,7 @@
                 </div>
 
             </fieldset>
-            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save mr-2"></i>Procesar</button>
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-poll mr-2"></i>Procesar</button>
             <button type="reset" class="btn btn-default btn-sm">Reset</button>
         </form>
     </div>
