@@ -97,6 +97,7 @@ Route::prefix('companies')->group(function () {
         Route::patch('/{company}/show', [CompaniesController::class, 'update'])->name('companies.update');
         Route::delete('/{company}/show', [CompaniesController::class, 'destroy'])->name('companies.destroy');
         Route::post('/{company}/sync', [CompaniesController::class, 'sync'])->name('companies.sync');
+        Route::post('/{company}/add-corporate', [CompaniesController::class, 'corporate'])->name('companies.corporate');
     });
     Route::get('/export', [CompaniesController::class, 'export'])->name('companies.export');
 });
@@ -167,3 +168,5 @@ Route::prefix('reports')->group(function () {
     Route::get('/companies-contacts', CompaniesContacts::class)->name('reports.companies-contacts');
     Route::get('/companies-programs', CompaniesPrograms::class)->name('reports.companies-programs');
 });
+
+Route::get('/testSoap', [CompaniesController::class, 'testSoap']);

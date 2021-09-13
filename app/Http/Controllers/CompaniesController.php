@@ -9,7 +9,6 @@ use App\Models\Company;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Barryvdh\DomPDF\Facade as PDF;
 
 class CompaniesController extends Controller
 {
@@ -30,7 +29,7 @@ class CompaniesController extends Controller
         $company = Company::create([
             'name' => $request->name,
             'rfc' => $request->rfc,
-            'tradename' => $request->tradename,
+            'tradeName' => $request->tradeName,
         ]);
 
         foreach ($request->programs as $program) {
@@ -45,12 +44,25 @@ class CompaniesController extends Controller
         return view('companies.show', [
             'company' => $company,
             'programs' => Program::orderBy('name')->get(),
+            'corporates' => Company::excludeInactive()->where('corporate', 1)->pluck('name', 'id'),
         ]);
     }
 
     public function update(Company $company, UpdateCompanyRequest $request)
     {
-        $company->update($request->validated());
+        if ($request['corporate'] === '0' && $company->children()->exists())
+        {
+            try {
+                $company->children()->update([
+                    'childrenOf' => null,
+                ]);
+            } catch (\Exception $e)
+            {
+                return $e;
+            }
+        }
+
+        $company->update( $request->validated() );
 
         return redirect()->route('companies.show', $company)->with('success', 'Los datos se han actualizado con éxito');
     }
@@ -60,6 +72,15 @@ class CompaniesController extends Controller
         $company->programs()->sync($request->programs);
 
         return redirect()->back()->with('success', 'Los programas asociados se han actualizado.');
+    }
+
+    public function corporate(Company $company, Request $request)
+    {
+        $company->update([
+            'childrenOf' => $request['belongsToCorporate'],
+        ]);
+
+        return redirect()->back()->with('success', 'Se asocio correctamente la empresa corporativo.');
     }
 
     public function destroy(Company $company)
@@ -76,6 +97,31 @@ class CompaniesController extends Controller
     public function export()
     {
         return Excel::download(new CompaniesExport, 'empresas-' . NOW()->format('dmY') . '.xlsx');
+    }
+
+    // Funcion de prueba para la conexion del WS
+    public function testSoap()
+    {
+        $wsdl = "http://192.168.1.3/SdkWs/WebService.asmx?WSDL";
+        $authentication = array(
+            'userName' => 'jrobles',
+            'password' => 'mycode'
+        );
+        $header = new \SoapHeader(
+            'http://tempuri.org/',
+            'ValidateUser',
+            $authentication,
+            false
+        );
+
+        $client = new \SoapClient($wsdl);
+        $client->__setSoapHeaders($header);
+
+        $res = $client->CrearCFDI([
+            'importeTotal' => 1500
+        ]);
+
+        dd($res);
     }
 
 }

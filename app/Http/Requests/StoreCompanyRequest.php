@@ -26,7 +26,7 @@ class StoreCompanyRequest extends FormRequest
         return [
             'name' => ['required', 'min:5', 'string'],
             'rfc' => ['required', 'min:12', 'max:13'],
-            'tradename' => ['nullable', 'string'],
+            'tradeName' => ['nullable', 'string'],
             'programs' => ['required', 'array'],
             'programs.*' => ['exists:programs,id']
         ];

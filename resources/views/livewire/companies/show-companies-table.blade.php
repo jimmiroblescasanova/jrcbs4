@@ -32,8 +32,8 @@
                         </x-tables.table-heading>
                         <x-tables.table-heading sortable wire:click="sortBy('rfc')"
                             :direction="$sortField === 'rfc' ? $sortDirection : null">R.F.C.</x-tables.table-heading>
-                        <x-tables.table-heading sortable wire:click="sortBy('tradename')"
-                            :direction="$sortField === 'tradename' ? $sortDirection : null">Nombre comercial
+                        <x-tables.table-heading sortable wire:click="sortBy('tradeName')"
+                            :direction="$sortField === 'tradeName' ? $sortDirection : null">Nombre comercial
                         </x-tables.table-heading>
                         @can('edit companies')
                         <th style="width: 10%;">&nbsp;</th>
@@ -46,7 +46,7 @@
                         <td>{{ $company->id }}</td>
                         <td>{{ $company->name }}</td>
                         <td>{{ $company->rfc }}</td>
-                        <td>{{ $company->tradename }}</td>
+                        <td>{{ $company->tradeName }}</td>
                         @can('edit companies')
                         <td class="text-center">
                             <a href="{{ route('companies.show', $company) }}" class="btn btn-default btn-xs mr-2">

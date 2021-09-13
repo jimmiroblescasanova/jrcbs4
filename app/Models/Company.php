@@ -19,7 +19,12 @@ class Company extends Model
             : static::query()->where('id', 'LIKE', '%' . $search . '%')
             ->orWhere('name', 'LIKE', '%' . $search . '%')
             ->orWhere('rfc', 'LIKE', '%' . $search . '%')
-            ->orWhere('tradename', 'LIKE', '%' . $search . '%');
+            ->orWhere('tradeName', 'LIKE', '%' . $search . '%');
+    }
+
+    public static function excludeInactive()
+    {
+        return static::query()->where('inactive', '=', 0);
     }
 
     public static function qReportContacts($show): \Illuminate\Database\Eloquent\Builder
@@ -60,9 +65,9 @@ class Company extends Model
         $this->attributes['name'] = Str::upper($value);
     }
 
-    public function setTradenameAttribute($value)
+    public function setTradeNameAttribute($value)
     {
-        $this->attributes['tradename'] = Str::upper($value);
+        $this->attributes['tradeName'] = Str::upper($value);
     }
 
     public function contacts()
@@ -73,5 +78,15 @@ class Company extends Model
     public function programs()
     {
         return $this->belongsToMany(Program::class);
+    }
+
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Company::class,'childrenOf');
+    }
+
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'childrenOf');
     }
 }
