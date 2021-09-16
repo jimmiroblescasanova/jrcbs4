@@ -12,6 +12,11 @@ class Ticket extends Model
     protected $guarded = [];
     protected $dates = ['ended_at'];
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     public function contact()
     {
         return $this->belongsTo(Contact::class);

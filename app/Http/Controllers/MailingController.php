@@ -44,8 +44,8 @@ class MailingController extends Controller
 
         $data = [
             'to' => $emails,
-            'subject' => $request->subject,
-            'content' => $request->content,
+            'subject' => $request['subject'],
+            'content' => $request['content'],
             'status' => $status,
         ];
 

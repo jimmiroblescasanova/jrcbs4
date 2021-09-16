@@ -70,6 +70,11 @@ class Company extends Model
         $this->attributes['tradeName'] = Str::upper($value);
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
     public function contacts()
     {
         return $this->hasMany(Contact::class);

@@ -24,6 +24,7 @@ class SaveTicketRequest extends FormRequest
     public function rules()
     {
         return [
+            'company_id' => ['required', 'exists:companies,id'],
             'contact_id' => ['required', 'exists:contacts,id'],
             'activity_id' => ['required', 'exists:activities,id'],
             'tag_id' => ['required', 'exists:tags,id'],

@@ -6,7 +6,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Models\Comment;
-use App\Models\Contact;
+use App\Models\Company;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Notifications\NewComment;
@@ -20,7 +20,7 @@ class TicketsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('getContactsApi');
     }
 
     public function index()
@@ -31,7 +31,7 @@ class TicketsController extends Controller
     public function create()
     {
         return view('tickets.create', [
-            'contacts' => Contact::all(),
+            'companies' => Company::pluck('name', 'id'),
             'tags' => Tag::pluck('name', 'id'),
             'activities' => Activity::pluck('name', 'id'),
             'users' => User::where('id', '!=', Auth::id())->pluck('name', 'id'),
@@ -51,11 +51,11 @@ class TicketsController extends Controller
         }
 
         $data = [
-            'id' => $ticket->id,
+            'id' => $ticket['id'],
             'activity' => $ticket->activity->name,
         ];
 
-        User::findOrFail($ticket->assigned_to)->notify(new TicketAssigned($data));
+        User::findOrFail($ticket['assigned_to'])->notify(new TicketAssigned($data));
 
         session()->flash('message', "Registro agregado correctamente.");
 
@@ -70,15 +70,6 @@ class TicketsController extends Controller
         ]);
     }
 
-    public function update(Ticket $ticket, Request $request)
-    {
-        $ticket->update([
-            'activity_id' => $request->activity_id,
-        ]);
-
-        return redirect()->route('tickets.index');
-    }
-
     public function close(Ticket $ticket)
     {
         $ticket->update([
@@ -87,7 +78,7 @@ class TicketsController extends Controller
         ]);
 
         $data = [
-            'id' => $ticket->id,
+            'id' => $ticket['id'],
             'message' => 'Ticket cerrado',
         ];
 
@@ -101,14 +92,41 @@ class TicketsController extends Controller
     public function addComment(SaveCommentRequest $request, Ticket $ticket)
     {
         $data = [
-            'ticket_id' => $ticket->id,
+            'ticket_id' => $ticket['id'],
             'user_id' => Auth::id(),
-            'message' => $request->message,
+            'message' => $request['message'],
         ];
 
         Comment::create($data);
-        User::findOrFail($ticket->assigned_to)->notify(new NewComment($data));
+        User::findOrFail($ticket['assigned_to'])->notify(new NewComment($data));
 
         return redirect()->back();
+    }
+
+    // API call
+    public function getContactsApi()
+    {
+        if (request()->json())
+        {
+            $companies = Company::with('children.contacts')->findOrFail( request()->input('id') );
+            $contacts = [];
+
+            if ($companies->children()->exists())
+            {
+                foreach ($companies->children as $child)
+                {
+                    foreach ($child->contacts as $contact)
+                    {
+                        $contacts[$contact->id] = $contact->name;
+                    }
+                }
+            } else {
+                foreach ($companies->contacts as $contact) {
+                    $contacts[$contact->id] = $contact->name;
+                }
+            }
+
+            return response()->json($contacts);
+        }
     }
 }

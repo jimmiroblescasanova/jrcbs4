@@ -9,36 +9,41 @@
             <input type="hidden" name="created_by" value="{{ Auth::id() }}">
             <div class="card-body">
                 <div class="row">
-                    <div class="form-group col-12 col-md-8">
-                        <x-forms.select name="contact_id" class="select2" label="Seleccionar un contacto">
-                            <option></option>
-                            @foreach ($contacts as $contact)
-                            <option value="{{ $contact->id }}">{{ $contact->full_name }}
-                                ({{ Str::limit($contact->company->name ?? '', 30, '...') }})</option>
-                            @endforeach
-                        </x-forms.select>
+                    <div class="form-group col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="companies">Seleccionar empresa</label>
+                            <select class="form-control select2" id="companies" name="company_id">
+                                <option></option>
+                                @foreach ($companies as $id => $company)
+                                <option value="{{ $id }}">{{ $company }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label for="contacts">Selecciona un contacto</label>
+                        <select class="form-control" name="contact_id" id="contacts">
+                            <option disabled selected>Primero selecciona una empresa</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="form-group col-12 col-md-4">
-                        <x-forms.select name="activity_id" class="select2" label="Actividad">
-                            <option></option>
+                        <x-forms.select name="activity_id" label="Actividad">
                             @foreach ($activities as $id => $activity)
                             <option value="{{ $id }}">{{ $activity }}</option>
                             @endforeach
                         </x-forms.select>
                     </div>
-                </div>
-                <div class="row">
                     <div class="form-group col-6 col-md-4">
-                        <x-forms.select name="tag_id" class="select2" label="Seleccionar etiqueta">
-                            <option></option>
+                        <x-forms.select name="tag_id" label="Seleccionar etiqueta">
                             @foreach ($tags as $id => $tag)
                             <option value="{{ $id }}">{{ $tag }}</option>
                             @endforeach
                         </x-forms.select>
                     </div>
                     <div class="form-group col-6 col-md-4">
-                        <x-forms.select name="assigned_to" class="select2" label="Asignar a">
-                            <option></option>
+                        <x-forms.select name="assigned_to" label="Asignar a">
                             @foreach ($users as $id => $user)
                             <option value="{{ $id }}">{{ $user }}</option>
                             @endforeach
@@ -47,8 +52,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12 col-md-12">
-                        <x-form-textarea class="summernote" label="Notas" name="note"
-                            placeholder="Agrega unas notas..." />
+                        <textarea name="note" id="note" class="summernote" rows="10"
+                            placeholder="Agrega tus comentarios"></textarea>
                         <small class="text-muted">Máximo 255 carácteres.</small>
                     </div>
                 </div>
@@ -86,8 +91,38 @@
                     placeholder: "Selecciona una opción",
                     allowClear: true
                 });
-            });
-            $(document).ready(function() {
+
+                $('#companies').on('select2:select', function (e) {
+                    let company = e.params.data;
+                    // console.log(company);
+
+                    $.ajax({
+                        // headers: {'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')},
+                        url: '{{ url('/api/get-contacts') }}',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { 'id': company.id },
+                        success: function (response) {
+                            const select = $('#contacts');
+                            // console.log(Object.keys(response).length);
+                            let qty = Object.keys(response).length;
+                            // Limpiar select
+                            select.empty();
+                            if (qty > 0)
+                            {
+                                $.each(response, function (index, element) {
+                                    select.append('<option value="' + index + '">' + element + '</option>');
+                                });
+                            } else {
+                                select.append('<option selected>La empresa no tiene contactos</option>');
+                            }
+                        },
+                        error: function (response) {
+                            console.log(response);
+                        },
+                    });
+                });
+
                 $('.summernote').summernote({
                     height: 120,
                     maxHeight: 200,

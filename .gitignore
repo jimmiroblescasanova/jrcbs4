@@ -19,3 +19,4 @@ public/.DS_Store
 .vscode/
 .idea/
 **/.DS_Store
+_ide_helper.php

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MailingController;
+use App\Http\Controllers\TicketsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('mailing/store-image', [MailingController::class, 'storeImage']);
+Route::post('get-contacts', [TicketsController::class, 'getContactsApi']);

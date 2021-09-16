@@ -131,7 +131,6 @@ Route::prefix('tickets')->group(function () {
         Route::get('/{ticket}/show', [TicketsController::class, 'show'])->name('tickets.show');
         Route::get('/{ticket}/close', [TicketsController::class, 'close'])->name('tickets.close');
         Route::post('/{ticket}/add-comment', [TicketsController::class, 'addComment'])->name('tickets.comment');
-        Route::patch('/{ticket}', [TicketsController::class, 'update'])->name('tickets.update');
     });
 });
 

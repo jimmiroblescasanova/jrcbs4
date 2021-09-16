@@ -18,7 +18,13 @@
 
                     <h3 class="profile-username text-center">{{ $ticket->contact->full_name }}</h3>
 
-                    <p class="text-muted text-center">{{ $ticket->contact->company->name ?? '*No se ha capturado la empresa' }}</p>
+                    <p class="text-muted text-center">
+                        @if ($ticket->company()->exists())
+                            {{ $ticket->company->name }}
+                        @else
+                            {{ $ticket->contact->company->name ?? '*No se ha capturado la empresa' }}
+                        @endif
+                    </p>
 
                     <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
@@ -44,10 +50,11 @@
                     </ul>
 
                     @if ($ticket->active)
-                        <a href="{{ route('tickets.close', $ticket) }}"
-                            class="btn btn-primary btn-block"><b><i class="fas fa-thumbs-up mr-2"></i>Finalizar</b></a>
+                        <a href="{{ route('tickets.close', $ticket) }}" class="btn btn-primary btn-block"><b><i
+                                    class="fas fa-thumbs-up mr-2"></i>Finalizar</b></a>
                     @endif
-                    <button type="button" class="btn btn-default btn-block" onclick="history.back();"><i class="far fa-hand-point-left mr-2"></i>Regresar</button>
+                    <button type="button" class="btn btn-default btn-block" onclick="history.back();"><i
+                            class="far fa-hand-point-left mr-2"></i>Regresar</button>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -63,32 +70,19 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <strong><i class="far fa-calendar-check mr-1 mb-3"></i> Actividad a realizar</strong>
-                    @if ($ticket->active)
-                        <form action="{{ route('tickets.update', $ticket) }}" method="POST">
-                            @csrf @method('PATCH')
-                            <div class="row mt-3">
-                                <div class="col-12 col-sm-10">
-                                    <x-form-select name="activity_id" :bind="$ticket" class="border-0 shadow-sm"
-                                        :options="$activities" />
-                                </div>
-                                <div class="col-12 col-sm-2">
-                                    <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
-                                </div>
-                            </div>
-                        </form>
-                    @else
-                        <x-form-input name="" value="{{ $ticket->activity->name }}" disabled />
-                    @endif
+                    <p class="text-muted ml-3">{{ $ticket->activity->name }}</p>
                     <hr>
 
                     <strong><i class="far fa-comment-alt mr-1 mb-3"></i> Notas</strong>
-                    <p class="text-muted">{!! $ticket->note !!}</p>
+                    <p class="text-muted ml-3">{!! $ticket->note !!}</p>
                     <hr>
 
                     <strong><i class="fas fa-link mr-1 mb-3"></i> Archivos adjuntos</strong>
                     <ul class="list-unstyled">
                         @foreach ($ticket->attachments as $attachment)
-                            <li><a href="{{ Storage::url($attachment->route) }}" target="_blank" class="btn-link text-secondary"><i class="fas fa-paperclip mr-2"></i>{{ $attachment->filename }}</a></li>
+                            <li><a href="{{ Storage::url($attachment->route) }}" target="_blank"
+                                    class="btn-link text-secondary"><i
+                                        class="fas fa-paperclip mr-2"></i>{{ $attachment->filename }}</a></li>
                         @endforeach
                     </ul>
                     <hr>
