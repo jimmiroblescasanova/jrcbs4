@@ -33,7 +33,7 @@ class CompaniesContacts extends Component
         }
 
         $pdf = PDF::loadView('reports.companies-contacts', compact('companies'));
-        $result = Storage::put('reports/report.pdf', $pdf->output());
+        $result = Storage::disk('public')->put('reports/report.pdf', $pdf->output(), 'public');
 
         return $this->emit('generateReport', $result);
     }
