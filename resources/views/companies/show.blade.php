@@ -136,8 +136,7 @@
                                 <label class="form-check-label">
                                     <input type="checkbox" class="form-check-input" name="programs[]"
                                         value="{{ $program->id }}" id="program-{{ $row }}"
-                                        {{ $company->programs->contains($program->id) ? 'checked="checked"' : '' }} />{{ $program->name }}
-                                    {{ $program->annual_license ? 'Anual' : 'Tradicional' }}
+                                        {{ $company->programs->contains($program->id) ? 'checked="checked"' : '' }} />{{ $program->fullProgramName }}
                                 </label>
                             </div>
                         @endforeach

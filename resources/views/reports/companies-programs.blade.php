@@ -101,7 +101,7 @@
             @forelse($company->programs as $row => $program)
             <tr class="row">
                 <td>{{ $row + 1 }}</td>
-                <td>{{ $program->name }}</td>
+                <td>{{ $program->name . ($program->annual_license) ? ' Anual' : ' Tradicional' }}</td>
             </tr>
             @empty
             <tr>

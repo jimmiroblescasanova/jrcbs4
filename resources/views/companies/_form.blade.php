@@ -27,7 +27,7 @@
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">
                             <input class="form-check-input" type="checkbox" name="programs[]" id="program-{{ $i }}" value="{{ $program->id }}">
-                            {{ $program->name }} ( {{ $program->annual_license ? 'Anual' : 'Tradicional' }} )
+                            {{ $program->fullProgramName }}
                         </label>
                     </div>
                 @endforeach

@@ -28,8 +28,8 @@
                     <label for="program">Programas</label>
                     <div wire:ignore>
                         <select multiple id="program" class="form-control select2" wire:model.lazy="program">
-                            @foreach ($programList as $id => $program)
-                                <option value="{{ $id }}">{{ $program }}</option>
+                            @foreach ($programList as $program)
+                                <option value="{{ $program->id }}">{{ $program->fullProgramName }}</option>
                             @endforeach
                         </select>
                     </div>

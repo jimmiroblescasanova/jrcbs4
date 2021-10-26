@@ -18,4 +18,9 @@ class Program extends Model
     {
         return $this->belongsToMany(Company::class);
     }
+
+    public function getFullProgramNameAttribute()
+    {
+        return $this->attributes['name'] . " " . ($this->attributes['annual_license'] ? 'Anual' : 'Tradicional');
+    }
 }

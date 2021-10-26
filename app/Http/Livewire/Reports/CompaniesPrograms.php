@@ -23,7 +23,7 @@ class CompaniesPrograms extends Component
 
     public function mount()
     {
-        $this->programList = Program::pluck('name', 'id');
+        $this->programList = Program::all();
     }
 
     public function generate()
@@ -42,8 +42,7 @@ class CompaniesPrograms extends Component
         }
 
         $pdf = PDF::loadView('reports.companies-programs', compact('companies'));
-        $result = Storage::disk('public')
-            ->put('reports/report.pdf', $pdf->output(), 'public');
+        $result = Storage::disk('public')->put('reports/report.pdf', $pdf->output(), 'public');
 
         return $this->emit('generateReport', $result);
     }
