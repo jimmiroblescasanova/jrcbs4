@@ -30,6 +30,7 @@ class CompaniesController extends Controller
             'name' => $request->name,
             'rfc' => $request->rfc,
             'tradeName' => $request->tradeName,
+            'corporate' => 0,
         ]);
 
         foreach ($request->programs as $program) {
