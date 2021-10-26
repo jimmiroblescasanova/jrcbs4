@@ -39,7 +39,7 @@
 <script>
     Livewire.on('generateReport', result => {
         if (result) {
-            let url = "{{ Storage::url('reports/report.pdf') }}";
+            let url = "{{ asset('/storage/reports/report.pdf') }}";
             $('#reportPage').attr('data', url);
         }
     });
